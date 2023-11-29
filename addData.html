@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="eng">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <meta name="description" content="">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/images/favicon.png">
+    <meta name="author" content="Ernest Pena Jr">
+    <meta name="HandheldFriendly" content="true">
+    <title></title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/fontawesome-pro-5.15.4/css/all.css">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="node_modules/datatables.net-bs5/css/dataTables.bootstrap5.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="  glass" style="margin-top:25px;">
+            <div class="row">
+                <div class="col-6">
+                    <h1 class="text-center text-uppercase">Add Ledger Data</h1>
+                </div>
+                <div class="col-6">
+                    <h1 class="text-center text-uppercase">Ledger Data</h1>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center  p-1">
+                                <div class="col-4 text-end fw-bold"> Transaction Number: </div>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" id="transactionType"
+                                        placeholder="Transaction Type">
+                                </div>
+                            </div>
+
+                            <div class="row align-items-center p-1">
+                                <div class="col-4 text-end fw-bold"> Transaction Type: </div>
+                                <div class="col-8">
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected>Open this select menu</option>
+                                        <option value="1">Cash</option>
+                                        <option value="2">Credit</option>
+                                        <option value="3">Check</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row align-items-center p-1">
+                                <div class="col-4 text-end fw-bold"> Vendor </div>
+                                <div class="col-8">
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected>Open this select menu</option>
+                                        <option value="1">Cash</option>
+                                        <option value="2">Credit</option>
+                                        <option value="3">Check</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row align-items-center p-1">
+                                <div class="col-4 text-end fw-bold"> Effective Date: </div>
+                                <div class="col-8">
+                                    <input type="date" class="form-control" id="transactionType"
+                                        placeholder="Transaction Type">
+                                </div>
+                            </div>
+
+                            <div class="row align-items-center p-1">
+                                <div class="col-4 text-end fw-bold">CME Item: </div>
+                                <div class="col-8">
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected>Open this select menu</option>
+                                        <option value="1">Cash</option>
+                                        <option value="2">Credit</option>
+                                        <option value="3">Check</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row align-items-center p-1">
+                                <div class="col-4 text-end fw-bold"> Ammount: </div>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" id="ammount" placeholder="Ammount">
+                                </div>
+                            </div>
+
+                            <div class="row align-items-center p-1">
+                                <div class="col-4 text-end fw-bold"> Fund: </div>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" id="ammount" placeholder="Ammount">
+                                </div>
+                            </div>
+
+                            <div class="row align-items-center p-1">
+                                <div class="col-4 text-end fw-bold"> Account: </div>
+                                <div class="col-8">
+                                    <select id="account" class="form-select" aria-label="Default select example">
+                                        <option selected>Open this select menu</option>
+                                        <option value="1">Cash</option>
+                                        <option value="2">Credit</option>
+                                        <option value="3">Check</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row align-items-center p-1">
+                                <div class="col-4 text-end fw-bold"> Class Code: </div>
+                                <div class="col-8">
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected>Open this select menu</option>
+                                        <option value="1">Cash</option>
+                                        <option value="2">Credit</option>
+                                        <option value="3">Check</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row align-items-center p-1">
+                                <div class="col-4 text-end fw-bold"> PO Number: </div>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" id="Purchase_order"
+                                        placeholder="Purchase_order">
+                                </div>
+                            </div>
+
+                            <div class="row align-items-center p-1">
+                                <div class="col-4 text-end fw-bold"> Note: </div>
+                                <div class="col-8">
+                                    <textarea class="form-control" id="notes" placeholder="notes"></textarea>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row p-2">
+                <div class="col-6 ">
+                    <button class="btn btn-outline-dark float-end"><i class="fal fa-save"></i> Save </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+
+
+
+<script src="node_modules/jquery/dist/jquery.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>

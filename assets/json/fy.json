@@ -1,0 +1,14 @@
+{
+    "fiscal":[
+        {"FY":2027, "display":"FY-27", "timeline":"8/31-9/1"},
+        {"FY":2026, "display":"FY-26", "timeline":"8/31-9/1"},
+        {"FY":2025, "display":"FY-25", "timeline":"8/31-9/1"},
+        {"FY":2024, "display":"FY-24", "timeline":"8/31-9/1"},
+        {"FY":2023, "display":"FY-23", "timeline":"8/31-9/1"},
+        {"FY":2022, "display":"FY-22", "timeline":"8/31-9/1"},
+        {"FY":2021, "display":"FY-21", "timeline":"8/31-9/1"},
+        {"FY":2020, "display":"FY-20", "timeline":"8/31-9/1"},
+        {"FY":2019, "display":"FY-19", "timeline":"8/31-9/1"},
+        {"FY":2018, "display":"FY-18", "timeline":"8/31-9/1"}
+    ]
+}

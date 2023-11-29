@@ -1,0 +1,103 @@
+
+<div class="container-fluid glass" style="margin: 8px 0px 0px 0px">
+  
+  <div class="row">
+    <div class="col-6">
+      <h1 class="text-center text-uppercase">Manage <span class="typeName text-white"></span></h1>
+    </div>
+  </div>
+  <div class="row">
+  <div class="col-6">
+    <div class="card text-bg-primary">
+      <div class="card-body">
+        <div class="card-header">
+          <h5 class="fs-4">Add New <span class="typeName"></span></h5>
+        </div>
+        <div id="cfsFrm"></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+
+    <div class="input-group mb-0">
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-primary">Middle</button>
+        <button type="button" class="btn btn-primary">Right</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title"><span class="typeName"></span></h5>
+        <ul id="displayInfo" class="list-group"></ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<script>
+  $(document).ready(function () {
+    var type = $("#LoadContent").data("type");
+    $(".typeName").text(type);
+    console.log(type)
+    if(type == 'Vendor'){
+      loadData(type)
+    }else if(type == 'Fund'){
+      loadData(type)
+    }else if(type == 'Category'){
+      loadData(type)
+    }else if(type == 'Pool'){
+      loadData(type)
+    } else if(type == 'CFS'){
+      $('#DEPTID, #FUND,#PC_BU,#PROJECT_ID,#ACTIVITY_CODE').on('keyup', function(){
+            createCfsDisplay();
+        });
+        $('#FUND_GROUP, #FUND_TYPE').on('change', function(){
+            createCfsDisplay();
+        });
+      loadData(type)
+    } else{
+      loadData(type)
+    }
+
+    //loadData(type);
+  });
+  function loadData(type) {
+    var frm = '';
+        frm += '<div class="row">';
+        frm += '<div class="col-md">';
+        frm += '<input type="text" class="form-control" id="CFS" placeholder="Chartfield String" aria-label="CFS">';
+        frm += '</div>';
+        frm += '<div class="col-md-2">';
+        frm += '<input type="text" class="form-control" id="PRIMARY_BALANCE" placeholder="Primary Balance" aria-label="PRIMARY BALANCE">';
+        frm += '</div>';
+        frm += '<div class="col-md-2 d-block align-content-center">';
+        frm += '<button class="btn btn-primary" ><i class="fas fa-save"></i> Save</button>';
+        frm += '</div>';
+        frm += '</div>';
+        frm += '<div class="row mt-2">';
+        frm += '<div class="col-md-12">';
+        frm += '<textarea class="form-control" id="CFS_DESC" rows="3" placeholder="Description"></textarea>';
+        frm += '</div>';
+        frm += '</div>';
+        $("#cfsFrm").html(frm);
+
+    $.ajax({
+      url: "assets/CFCs/functions.cfc",
+      type: "GET",
+      dataType: "json",
+      data: { method: "get" + type }
+      ,success: function (data) {
+          var x = data.items;
+          console.log(x);
+          var str = '';
+          for (var i = 0; i < x.length; i++) {
+            str += '<li class="list-group-item">' + x[i].name + '</li>';
+          }
+          $("#displayInfo").html(str);
+      }
+    });
+  }
+</script>

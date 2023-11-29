@@ -1,0 +1,1004 @@
+{
+    "data": [
+        {
+            "Provider": "SHISEIDO CO., LTD.",
+            "Pavillion": "SHISEIDO SHEER MATIFYING COMPACT (REFILL)",
+            "Fund": "T17898A",
+            "Quote": "$440.78",
+            "income": "$664.59",
+            "Personnel CME": "$362.00",
+            "Total Spent": "$545.26",
+            "Balance": "$474.58"
+        },
+        {
+            "Provider": "Sandoz Inc",
+            "Pavillion": "Desipramine Hydrochloride",
+            "Fund": "A5273",
+            "Quote": "$704.43",
+            "income": "$267.44",
+            "Personnel CME": "$317.84",
+            "Total Spent": "$376.16",
+            "Balance": "$652.41"
+        },
+        {
+            "Provider": "Enzyme Solutions, Inc.",
+            "Pavillion": "Servo Stat-Foam",
+            "Fund": "S42446",
+            "Quote": "$178.24",
+            "income": "$694.67",
+            "Personnel CME": "$26.46",
+            "Total Spent": "$781.18",
+            "Balance": "$167.57"
+        },
+        {
+            "Provider": "Taro Pharmaceuticals U.S.A., Inc.",
+            "Pavillion": "Carbamazepine",
+            "Fund": "S15112D",
+            "Quote": "$771.08",
+            "income": "$795.08",
+            "Personnel CME": "$912.60",
+            "Total Spent": "$965.98",
+            "Balance": "$777.85"
+        },
+        {
+            "Provider": "Richmond Division of Wyeth LLC, a subsidiary of Pfizer Inc.",
+            "Pavillion": "CHILDRENS DIMETAPP COLD AND ALLERGY",
+            "Fund": "E760",
+            "Quote": "$745.38",
+            "income": "$22.65",
+            "Personnel CME": "$710.71",
+            "Total Spent": "$66.87",
+            "Balance": "$851.08"
+        },
+        {
+            "Provider": "Jubilant HollisterStier LLC",
+            "Pavillion": "Pollens - Trees, Tree Mix 5",
+            "Fund": "M912",
+            "Quote": "$769.56",
+            "income": "$825.24",
+            "Personnel CME": "$158.44",
+            "Total Spent": "$242.60",
+            "Balance": "$216.56"
+        },
+        {
+            "Provider": "Aidarex Pharmaceuticals LLC",
+            "Pavillion": "Bacitracin Zinc",
+            "Fund": "S066X",
+            "Quote": "$576.82",
+            "income": "$32.12",
+            "Personnel CME": "$754.89",
+            "Total Spent": "$127.88",
+            "Balance": "$924.92"
+        },
+        {
+            "Provider": "Publix Super Markets Inc",
+            "Pavillion": "arthritis pain relief",
+            "Fund": "I6001",
+            "Quote": "$652.15",
+            "income": "$674.33",
+            "Personnel CME": "$649.71",
+            "Total Spent": "$878.20",
+            "Balance": "$425.48"
+        },
+        {
+            "Provider": "HAIYANG XINYI Towelette CO., LTD.",
+            "Pavillion": "Alcohol Prep Pad",
+            "Fund": "H6039",
+            "Quote": "$513.86",
+            "income": "$998.32",
+            "Personnel CME": "$555.15",
+            "Total Spent": "$188.40",
+            "Balance": "$790.62"
+        },
+        {
+            "Provider": "Freds Inc",
+            "Pavillion": "Non-Aspirin PM",
+            "Fund": "H933X1",
+            "Quote": "$346.83",
+            "income": "$128.31",
+            "Personnel CME": "$904.75",
+            "Total Spent": "$392.07",
+            "Balance": "$350.21"
+        },
+        {
+            "Provider": "Hospira, Inc.",
+            "Pavillion": "Lorazepam",
+            "Fund": "M1A1710",
+            "Quote": "$521.47",
+            "income": "$719.94",
+            "Personnel CME": "$354.89",
+            "Total Spent": "$754.87",
+            "Balance": "$857.46"
+        },
+        {
+            "Provider": "Baxter Healthcare Corporation",
+            "Pavillion": "Potassium Chloride in Dextrose and Sodium Chloride",
+            "Fund": "S0572XD",
+            "Quote": "$257.27",
+            "income": "$867.59",
+            "Personnel CME": "$135.57",
+            "Total Spent": "$494.68",
+            "Balance": "$475.58"
+        },
+        {
+            "Provider": "Cadila Healthcare Limited",
+            "Pavillion": "Duloxetine",
+            "Fund": "O3673X5",
+            "Quote": "$623.47",
+            "income": "$295.86",
+            "Personnel CME": "$731.28",
+            "Total Spent": "$939.36",
+            "Balance": "$726.68"
+        },
+        {
+            "Provider": "Claris Lifesciences Inc.",
+            "Pavillion": "ONDANSETRON HYDROCHLORIDE",
+            "Fund": "S27401",
+            "Quote": "$772.67",
+            "income": "$154.87",
+            "Personnel CME": "$29.57",
+            "Total Spent": "$420.95",
+            "Balance": "$182.67"
+        },
+        {
+            "Provider": "Good Neighbor Pharmacy",
+            "Pavillion": "Magnesium Citrate Oral Solution",
+            "Fund": "M89122",
+            "Quote": "$264.05",
+            "income": "$555.74",
+            "Personnel CME": "$339.55",
+            "Total Spent": "$630.82",
+            "Balance": "$478.98"
+        },
+        {
+            "Provider": "Indiana Botanic Gardens",
+            "Pavillion": "Homeopathic Sleep Formula",
+            "Fund": "S50351S",
+            "Quote": "$555.87",
+            "income": "$260.29",
+            "Personnel CME": "$606.91",
+            "Total Spent": "$313.11",
+            "Balance": "$646.75"
+        },
+        {
+            "Provider": "Kremers Urban Pharmaceuticals Inc.",
+            "Pavillion": "isosorbide mononitrate",
+            "Fund": "M05752",
+            "Quote": "$603.22",
+            "income": "$259.00",
+            "Personnel CME": "$163.41",
+            "Total Spent": "$60.04",
+            "Balance": "$43.49"
+        },
+        {
+            "Provider": "Indiana Botanic Gardens",
+            "Pavillion": "Homeopathic Bruise",
+            "Fund": "S52381N",
+            "Quote": "$198.33",
+            "income": "$296.03",
+            "Personnel CME": "$249.08",
+            "Total Spent": "$246.82",
+            "Balance": "$769.88"
+        },
+        {
+            "Provider": "Jiangsu Province JianErKang Medical Dressing Co.,Ltd",
+            "Pavillion": "Wash",
+            "Fund": "O34212",
+            "Quote": "$255.85",
+            "income": "$911.73",
+            "Personnel CME": "$233.84",
+            "Total Spent": "$325.82",
+            "Balance": "$812.30"
+        },
+        {
+            "Provider": "WOCKHARDT LIMITED",
+            "Pavillion": "RANITIDINE",
+            "Fund": "S72044M",
+            "Quote": "$601.53",
+            "income": "$956.21",
+            "Personnel CME": "$603.27",
+            "Total Spent": "$819.28",
+            "Balance": "$428.59"
+        },
+        {
+            "Provider": "AbbVie Inc.",
+            "Pavillion": "Lupron Depot",
+            "Fund": "S63699A",
+            "Quote": "$195.41",
+            "income": "$646.19",
+            "Personnel CME": "$940.12",
+            "Total Spent": "$85.18",
+            "Balance": "$336.82"
+        },
+        {
+            "Provider": "Wal-mart Stores Inc.",
+            "Pavillion": "Island Spring Antibacterial Body Wash",
+            "Fund": "K6281",
+            "Quote": "$156.39",
+            "income": "$743.12",
+            "Personnel CME": "$999.97",
+            "Total Spent": "$178.31",
+            "Balance": "$786.16"
+        },
+        {
+            "Provider": "Roxane Laboratories, Inc",
+            "Pavillion": "Granisetron Hydrochloride",
+            "Fund": "M25449",
+            "Quote": "$583.98",
+            "income": "$43.38",
+            "Personnel CME": "$234.48",
+            "Total Spent": "$895.79",
+            "Balance": "$404.96"
+        },
+        {
+            "Provider": "SUPERVALU INC.",
+            "Pavillion": "Day Time Cold Head Congestion Severe",
+            "Fund": "T628X2S",
+            "Quote": "$812.22",
+            "income": "$506.92",
+            "Personnel CME": "$419.99",
+            "Total Spent": "$19.18",
+            "Balance": "$637.00"
+        },
+        {
+            "Provider": "Premier Value",
+            "Pavillion": "Childrens Ibuprofen",
+            "Fund": "T7807XA",
+            "Quote": "$360.02",
+            "income": "$176.37",
+            "Personnel CME": "$171.85",
+            "Total Spent": "$925.70",
+            "Balance": "$575.20"
+        },
+        {
+            "Provider": "State of Florida DOH Central Pharmacy",
+            "Pavillion": "Trihexyphenidyl Hydrochloride",
+            "Fund": "C8408",
+            "Quote": "$250.95",
+            "income": "$308.15",
+            "Personnel CME": "$352.57",
+            "Total Spent": "$761.19",
+            "Balance": "$738.90"
+        },
+        {
+            "Provider": "NexMed (USA), Inc.",
+            "Pavillion": "Hydrocortisone",
+            "Fund": "T23322S",
+            "Quote": "$326.73",
+            "income": "$510.65",
+            "Personnel CME": "$810.65",
+            "Total Spent": "$977.97",
+            "Balance": "$75.01"
+        },
+        {
+            "Provider": "E. FOUGERA & CO., A division of Fougera Pharmaceuticals Inc.",
+            "Pavillion": "Desoximetasone",
+            "Fund": "K267",
+            "Quote": "$499.57",
+            "income": "$773.16",
+            "Personnel CME": "$512.91",
+            "Total Spent": "$358.82",
+            "Balance": "$884.08"
+        },
+        {
+            "Provider": "Apotheca Company",
+            "Pavillion": "Progesterone Phenolic",
+            "Fund": "S72063H",
+            "Quote": "$580.01",
+            "income": "$450.96",
+            "Personnel CME": "$940.12",
+            "Total Spent": "$613.09",
+            "Balance": "$224.03"
+        },
+        {
+            "Provider": "Allergan, Inc.",
+            "Pavillion": "ACUVAIL",
+            "Fund": "C9221",
+            "Quote": "$233.90",
+            "income": "$22.68",
+            "Personnel CME": "$729.41",
+            "Total Spent": "$439.96",
+            "Balance": "$290.77"
+        },
+        {
+            "Provider": "ALILY (ZHANGZHOU) BATH PRODUCTS LTD.",
+            "Pavillion": "Healing Waters Vanilla Orchid Anti-Bacterial Hand Sanitizer",
+            "Fund": "L940",
+            "Quote": "$934.63",
+            "income": "$836.71",
+            "Personnel CME": "$898.48",
+            "Total Spent": "$542.58",
+            "Balance": "$866.47"
+        },
+        {
+            "Provider": "Nelco Laboratories, Inc.",
+            "Pavillion": "Tag Alder",
+            "Fund": "J698",
+            "Quote": "$880.38",
+            "income": "$233.34",
+            "Personnel CME": "$117.42",
+            "Total Spent": "$861.08",
+            "Balance": "$433.50"
+        },
+        {
+            "Provider": "MSD Consumer Care, Inc.",
+            "Pavillion": "Coppertone Water Babies",
+            "Fund": "T24402",
+            "Quote": "$168.93",
+            "income": "$445.75",
+            "Personnel CME": "$654.51",
+            "Total Spent": "$957.45",
+            "Balance": "$59.74"
+        },
+        {
+            "Provider": "L'Oreal USA Products Inc",
+            "Pavillion": "Redken 5th Avenue NYC Scalp Relief Dandruff Control",
+            "Fund": "S42334",
+            "Quote": "$356.58",
+            "income": "$278.21",
+            "Personnel CME": "$612.12",
+            "Total Spent": "$873.60",
+            "Balance": "$607.87"
+        },
+        {
+            "Provider": "Advanced Beauty Systems, Inc.",
+            "Pavillion": "XOXO Kit",
+            "Fund": "V189XXA",
+            "Quote": "$917.20",
+            "income": "$334.15",
+            "Personnel CME": "$298.09",
+            "Total Spent": "$687.01",
+            "Balance": "$726.24"
+        },
+        {
+            "Provider": "Tonic Bath and Body Products Shenzhen Ltd.",
+            "Pavillion": "Pumpkin Anti-bacterial foaming Hand Wash",
+            "Fund": "M84433K",
+            "Quote": "$358.53",
+            "income": "$536.76",
+            "Personnel CME": "$305.87",
+            "Total Spent": "$541.54",
+            "Balance": "$982.62"
+        },
+        {
+            "Provider": "Mylan Pharmaceuticals Inc.",
+            "Pavillion": "Minocycline Hydrochloride",
+            "Fund": "S65802D",
+            "Quote": "$938.37",
+            "income": "$200.69",
+            "Personnel CME": "$224.70",
+            "Total Spent": "$832.96",
+            "Balance": "$691.35"
+        },
+        {
+            "Provider": "Wockhardt Limited",
+            "Pavillion": "Pioglitazone",
+            "Fund": "T507",
+            "Quote": "$101.24",
+            "income": "$144.69",
+            "Personnel CME": "$267.55",
+            "Total Spent": "$324.41",
+            "Balance": "$607.45"
+        },
+        {
+            "Provider": "7-Eleven",
+            "Pavillion": "7 Select Acid Controller",
+            "Fund": "S82401J",
+            "Quote": "$717.02",
+            "income": "$825.61",
+            "Personnel CME": "$616.28",
+            "Total Spent": "$543.84",
+            "Balance": "$896.22"
+        },
+        {
+            "Provider": "Eli Lilly and Company",
+            "Pavillion": "Strattera",
+            "Fund": "G724",
+            "Quote": "$361.03",
+            "income": "$141.52",
+            "Personnel CME": "$837.36",
+            "Total Spent": "$537.98",
+            "Balance": "$395.40"
+        },
+        {
+            "Provider": "American Amenities, Inc.",
+            "Pavillion": "MegaFresh Hand Sanitizer",
+            "Fund": "S30870D",
+            "Quote": "$862.29",
+            "income": "$777.70",
+            "Personnel CME": "$18.53",
+            "Total Spent": "$361.41",
+            "Balance": "$63.56"
+        },
+        {
+            "Provider": "Cardinal Health",
+            "Pavillion": "Naloxone Hydrochloride",
+            "Fund": "H1822",
+            "Quote": "$646.33",
+            "income": "$832.72",
+            "Personnel CME": "$997.32",
+            "Total Spent": "$575.97",
+            "Balance": "$937.87"
+        },
+        {
+            "Provider": "Chattem, Inc.",
+            "Pavillion": "Pamprin Multisymptom Menstrual Pain Relief",
+            "Fund": "E638",
+            "Quote": "$818.32",
+            "income": "$676.43",
+            "Personnel CME": "$629.22",
+            "Total Spent": "$68.08",
+            "Balance": "$151.05"
+        },
+        {
+            "Provider": "Watson Laboratories, Inc.",
+            "Pavillion": "Promethazine Hydrochloride",
+            "Fund": "S020XXS",
+            "Quote": "$622.27",
+            "income": "$891.70",
+            "Personnel CME": "$27.40",
+            "Total Spent": "$843.67",
+            "Balance": "$431.79"
+        },
+        {
+            "Provider": "TOPCO Associates, LLC",
+            "Pavillion": "Epsom Salt",
+            "Fund": "M84753S",
+            "Quote": "$237.30",
+            "income": "$276.67",
+            "Personnel CME": "$64.52",
+            "Total Spent": "$399.19",
+            "Balance": "$922.66"
+        },
+        {
+            "Provider": "L. Perrigo Company",
+            "Pavillion": "Good Sense Hemorrhoidal",
+            "Fund": "O2640",
+            "Quote": "$456.60",
+            "income": "$383.00",
+            "Personnel CME": "$655.36",
+            "Total Spent": "$189.65",
+            "Balance": "$210.88"
+        },
+        {
+            "Provider": "Novartis Pharmaceuticals Corporation",
+            "Pavillion": "EXTAVIA",
+            "Fund": "K0841",
+            "Quote": "$118.24",
+            "income": "$661.34",
+            "Personnel CME": "$424.50",
+            "Total Spent": "$470.88",
+            "Balance": "$163.11"
+        },
+        {
+            "Provider": "Coltene Whaledent Inc",
+            "Pavillion": "Ultracare For Hands",
+            "Fund": "S62318B",
+            "Quote": "$101.93",
+            "income": "$507.65",
+            "Personnel CME": "$965.16",
+            "Total Spent": "$237.24",
+            "Balance": "$172.88"
+        },
+        {
+            "Provider": "Aphena Pharma Solutions - Tennessee, Inc.",
+            "Pavillion": "Gabapentin",
+            "Fund": "O009",
+            "Quote": "$622.72",
+            "income": "$256.21",
+            "Personnel CME": "$763.64",
+            "Total Spent": "$494.57",
+            "Balance": "$575.47"
+        },
+        {
+            "Provider": "Physicians Total Care, Inc.",
+            "Pavillion": "Triamterene and Hydrochlorothiazide",
+            "Fund": "M1201",
+            "Quote": "$287.88",
+            "income": "$827.20",
+            "Personnel CME": "$535.70",
+            "Total Spent": "$716.25",
+            "Balance": "$728.13"
+        },
+        {
+            "Provider": "Rebel Distributors Corp",
+            "Pavillion": "Neomycin and Polymyxin B Sulfates and Dexamethasone",
+            "Fund": "S82246K",
+            "Quote": "$435.44",
+            "income": "$108.46",
+            "Personnel CME": "$469.86",
+            "Total Spent": "$464.42",
+            "Balance": "$571.78"
+        },
+        {
+            "Provider": "Family Dollar Services Inc",
+            "Pavillion": "family wellness laxative",
+            "Fund": "K0821",
+            "Quote": "$784.50",
+            "income": "$624.04",
+            "Personnel CME": "$172.95",
+            "Total Spent": "$567.27",
+            "Balance": "$584.32"
+        },
+        {
+            "Provider": "Newton Laboratories, Inc.",
+            "Pavillion": "Cardiac Support",
+            "Fund": "H536",
+            "Quote": "$444.18",
+            "income": "$617.92",
+            "Personnel CME": "$513.34",
+            "Total Spent": "$548.22",
+            "Balance": "$531.64"
+        },
+        {
+            "Provider": "BluePoint Laboratories",
+            "Pavillion": "Amlodipine Besylate and Benazepril Hydrochloride",
+            "Fund": "I97820",
+            "Quote": "$283.65",
+            "income": "$726.58",
+            "Personnel CME": "$772.70",
+            "Total Spent": "$992.77",
+            "Balance": "$765.66"
+        },
+        {
+            "Provider": "Mylan Pharmaceuticals Inc.",
+            "Pavillion": "Amlodipine and Atorvastatin",
+            "Fund": "T2115XA",
+            "Quote": "$936.26",
+            "income": "$435.08",
+            "Personnel CME": "$611.99",
+            "Total Spent": "$213.68",
+            "Balance": "$929.79"
+        },
+        {
+            "Provider": "Wal-Mart Stores Inc",
+            "Pavillion": "equate allergy relief d",
+            "Fund": "L97529",
+            "Quote": "$950.38",
+            "income": "$476.29",
+            "Personnel CME": "$704.39",
+            "Total Spent": "$583.06",
+            "Balance": "$101.62"
+        },
+        {
+            "Provider": "Apotheca Company",
+            "Pavillion": "Lymph Detox Plus",
+            "Fund": "W3181XD",
+            "Quote": "$757.86",
+            "income": "$336.38",
+            "Personnel CME": "$284.13",
+            "Total Spent": "$722.27",
+            "Balance": "$550.47"
+        },
+        {
+            "Provider": "Natural Creations, Inc.",
+            "Pavillion": "Arthritis HP",
+            "Fund": "H4751",
+            "Quote": "$810.29",
+            "income": "$728.98",
+            "Personnel CME": "$790.88",
+            "Total Spent": "$65.38",
+            "Balance": "$198.46"
+        },
+        {
+            "Provider": "Ethex Corporation",
+            "Pavillion": "dextroamphetamine sulfate",
+            "Fund": "T50A13",
+            "Quote": "$373.71",
+            "income": "$992.78",
+            "Personnel CME": "$123.18",
+            "Total Spent": "$324.08",
+            "Balance": "$71.46"
+        },
+        {
+            "Provider": "Cintas",
+            "Pavillion": "Xpect Buffered Eyewash Sterile Isotonic",
+            "Fund": "Y3592XD",
+            "Quote": "$180.51",
+            "income": "$183.51",
+            "Personnel CME": "$448.06",
+            "Total Spent": "$803.67",
+            "Balance": "$864.33"
+        },
+        {
+            "Provider": "Access Business Group LLC",
+            "Pavillion": "Peter Island Sunscreen",
+            "Fund": "S27892A",
+            "Quote": "$880.70",
+            "income": "$212.23",
+            "Personnel CME": "$236.71",
+            "Total Spent": "$303.06",
+            "Balance": "$471.97"
+        },
+        {
+            "Provider": "EQUALINE (SuperValu)",
+            "Pavillion": "Sleep Aid",
+            "Fund": "S82435B",
+            "Quote": "$563.85",
+            "income": "$867.87",
+            "Personnel CME": "$831.04",
+            "Total Spent": "$281.96",
+            "Balance": "$650.68"
+        },
+        {
+            "Provider": "Tropical International Manufacturing Inc",
+            "Pavillion": "Dental plus Baking Soda",
+            "Fund": "N996",
+            "Quote": "$444.55",
+            "income": "$450.93",
+            "Personnel CME": "$614.85",
+            "Total Spent": "$271.93",
+            "Balance": "$10.48"
+        },
+        {
+            "Provider": "MedVantx, Inc.",
+            "Pavillion": "Tri-Sprintec",
+            "Fund": "S32426",
+            "Quote": "$642.29",
+            "income": "$586.91",
+            "Personnel CME": "$809.59",
+            "Total Spent": "$754.31",
+            "Balance": "$462.35"
+        },
+        {
+            "Provider": "SHISEIDO CO., LTD.",
+            "Pavillion": "SHISEIDO ADVANCED HYDRO-LIQUID COMPACT (REFILL)",
+            "Fund": "R538",
+            "Quote": "$768.84",
+            "income": "$82.15",
+            "Personnel CME": "$229.30",
+            "Total Spent": "$728.21",
+            "Balance": "$26.42"
+        },
+        {
+            "Provider": "Genentech, Inc.",
+            "Pavillion": "LUCENTIS",
+            "Fund": "S06822D",
+            "Quote": "$535.43",
+            "income": "$496.31",
+            "Personnel CME": "$615.77",
+            "Total Spent": "$459.42",
+            "Balance": "$835.92"
+        },
+        {
+            "Provider": "TOP CARE (Topco Associates LLC)",
+            "Pavillion": "Laxative Pills",
+            "Fund": "C44309",
+            "Quote": "$755.64",
+            "income": "$115.65",
+            "Personnel CME": "$662.20",
+            "Total Spent": "$318.22",
+            "Balance": "$325.63"
+        },
+        {
+            "Provider": "Colgate-Palmolive Company",
+            "Pavillion": "Lady Speed Stick",
+            "Fund": "T24702",
+            "Quote": "$415.01",
+            "income": "$216.51",
+            "Personnel CME": "$88.91",
+            "Total Spent": "$324.18",
+            "Balance": "$178.94"
+        },
+        {
+            "Provider": "Allermed Laboratories, Inc.",
+            "Pavillion": "Hazelnut Pollen",
+            "Fund": "S12691S",
+            "Quote": "$819.74",
+            "income": "$169.07",
+            "Personnel CME": "$625.53",
+            "Total Spent": "$824.38",
+            "Balance": "$157.36"
+        },
+        {
+            "Provider": "AvPAK",
+            "Pavillion": "Meclizine Hydrochloride",
+            "Fund": "S0132",
+            "Quote": "$576.45",
+            "income": "$733.36",
+            "Personnel CME": "$597.12",
+            "Total Spent": "$544.10",
+            "Balance": "$455.29"
+        },
+        {
+            "Provider": "American Health Packaging",
+            "Pavillion": "Gabapentin",
+            "Fund": "T6111XA",
+            "Quote": "$156.51",
+            "income": "$258.91",
+            "Personnel CME": "$648.54",
+            "Total Spent": "$7.97",
+            "Balance": "$305.37"
+        },
+        {
+            "Provider": "Rebel Distributors Corp",
+            "Pavillion": "Zetia",
+            "Fund": "S60822A",
+            "Quote": "$135.29",
+            "income": "$431.11",
+            "Personnel CME": "$292.00",
+            "Total Spent": "$605.50",
+            "Balance": "$592.75"
+        },
+        {
+            "Provider": "Cardinal Health",
+            "Pavillion": "Mirtazapine",
+            "Fund": "M790",
+            "Quote": "$536.89",
+            "income": "$865.84",
+            "Personnel CME": "$657.04",
+            "Total Spent": "$195.69",
+            "Balance": "$177.39"
+        },
+        {
+            "Provider": "UCB, Inc.",
+            "Pavillion": "Neupro",
+            "Fund": "H60319",
+            "Quote": "$900.65",
+            "income": "$245.50",
+            "Personnel CME": "$470.72",
+            "Total Spent": "$724.37",
+            "Balance": "$698.19"
+        },
+        {
+            "Provider": "Aurobindo Pharma Limited",
+            "Pavillion": "Alprazolam",
+            "Fund": "S66110D",
+            "Quote": "$548.31",
+            "income": "$13.23",
+            "Personnel CME": "$97.53",
+            "Total Spent": "$759.97",
+            "Balance": "$709.75"
+        },
+        {
+            "Provider": "Nelco Laboratories, Inc.",
+            "Pavillion": "Stemphylium sarciniforms",
+            "Fund": "T3360XA",
+            "Quote": "$203.99",
+            "income": "$365.71",
+            "Personnel CME": "$178.17",
+            "Total Spent": "$503.70",
+            "Balance": "$948.22"
+        },
+        {
+            "Provider": "Cardinal Health",
+            "Pavillion": "risperidone",
+            "Fund": "H59351",
+            "Quote": "$867.32",
+            "income": "$893.02",
+            "Personnel CME": "$205.53",
+            "Total Spent": "$627.57",
+            "Balance": "$939.48"
+        },
+        {
+            "Provider": "Walgreen Company",
+            "Pavillion": "Nicotine",
+            "Fund": "E763",
+            "Quote": "$206.68",
+            "income": "$322.27",
+            "Personnel CME": "$82.12",
+            "Total Spent": "$994.56",
+            "Balance": "$118.64"
+        },
+        {
+            "Provider": "American Sales Company",
+            "Pavillion": "care one cold multi symptom",
+            "Fund": "S12430G",
+            "Quote": "$710.25",
+            "income": "$558.87",
+            "Personnel CME": "$357.24",
+            "Total Spent": "$283.63",
+            "Balance": "$639.49"
+        },
+        {
+            "Provider": "Apotheca Company",
+            "Pavillion": "Viral Plus",
+            "Fund": "T81",
+            "Quote": "$891.21",
+            "income": "$225.38",
+            "Personnel CME": "$502.74",
+            "Total Spent": "$522.42",
+            "Balance": "$948.41"
+        },
+        {
+            "Provider": "Wyeth Pharmaceutical Division of Wyeth Holdings Corporation, a subsidiary of Pfizer Inc.",
+            "Pavillion": "Prevnar",
+            "Fund": "S59029S",
+            "Quote": "$822.07",
+            "income": "$93.34",
+            "Personnel CME": "$631.34",
+            "Total Spent": "$980.61",
+            "Balance": "$636.54"
+        },
+        {
+            "Provider": "Watson Pharma, Inc.",
+            "Pavillion": "TAZTIA",
+            "Fund": "V6919XD",
+            "Quote": "$640.90",
+            "income": "$66.76",
+            "Personnel CME": "$397.81",
+            "Total Spent": "$640.62",
+            "Balance": "$920.01"
+        },
+        {
+            "Provider": "4Life Research USA, LLC",
+            "Pavillion": "4Life Enummi Protective Day Moisturizer",
+            "Fund": "V812XXS",
+            "Quote": "$897.86",
+            "income": "$896.71",
+            "Personnel CME": "$650.34",
+            "Total Spent": "$630.53",
+            "Balance": "$322.13"
+        },
+        {
+            "Provider": "A-S Medication Solutions LLC",
+            "Pavillion": "Triamcinolone Acetonide",
+            "Fund": "S82399R",
+            "Quote": "$618.76",
+            "income": "$336.14",
+            "Personnel CME": "$646.83",
+            "Total Spent": "$256.90",
+            "Balance": "$391.33"
+        },
+        {
+            "Provider": "REMEDYREPACK INC.",
+            "Pavillion": "Furosemide",
+            "Fund": "M2652",
+            "Quote": "$502.66",
+            "income": "$121.84",
+            "Personnel CME": "$565.45",
+            "Total Spent": "$562.76",
+            "Balance": "$181.79"
+        },
+        {
+            "Provider": "Lake Erie Medical DBA Quality Care Products LLC",
+            "Pavillion": "Glipizide",
+            "Fund": "S65292S",
+            "Quote": "$205.34",
+            "income": "$80.65",
+            "Personnel CME": "$345.70",
+            "Total Spent": "$122.69",
+            "Balance": "$938.76"
+        },
+        {
+            "Provider": "REMEDYREPACK INC.",
+            "Pavillion": "Levothyroxine sodium",
+            "Fund": "R402360",
+            "Quote": "$399.33",
+            "income": "$971.48",
+            "Personnel CME": "$231.11",
+            "Total Spent": "$732.71",
+            "Balance": "$889.08"
+        },
+        {
+            "Provider": "Physicians Total Care, Inc.",
+            "Pavillion": "Diethylpropion HCl",
+            "Fund": "S52026P",
+            "Quote": "$263.97",
+            "income": "$909.60",
+            "Personnel CME": "$392.94",
+            "Total Spent": "$58.46",
+            "Balance": "$376.14"
+        },
+        {
+            "Provider": "Aidarex Pharmaceuticals LLC",
+            "Pavillion": "Gabapentin",
+            "Fund": "S63264D",
+            "Quote": "$572.72",
+            "income": "$110.68",
+            "Personnel CME": "$335.70",
+            "Total Spent": "$373.97",
+            "Balance": "$409.80"
+        },
+        {
+            "Provider": "Sandoz Inc",
+            "Pavillion": "Carbamazepine",
+            "Fund": "S91152",
+            "Quote": "$222.81",
+            "income": "$816.33",
+            "Personnel CME": "$39.05",
+            "Total Spent": "$373.55",
+            "Balance": "$334.13"
+        },
+        {
+            "Provider": "L'Oreal USA Products Inc",
+            "Pavillion": "Redken 5th Avenue NYC Scalp Relief Dandruff Control",
+            "Fund": "M89359",
+            "Quote": "$817.47",
+            "income": "$446.14",
+            "Personnel CME": "$338.56",
+            "Total Spent": "$929.82",
+            "Balance": "$929.75"
+        },
+        {
+            "Provider": "Conopco Inc. d/b/a Unilever",
+            "Pavillion": "Degree for Men Absolute Protection V12",
+            "Fund": "M4728",
+            "Quote": "$602.32",
+            "income": "$68.73",
+            "Personnel CME": "$582.54",
+            "Total Spent": "$840.73",
+            "Balance": "$314.72"
+        },
+        {
+            "Provider": "Novartis Pharmaceuticals Corporation",
+            "Pavillion": "CombiPatch",
+            "Fund": "Q978",
+            "Quote": "$296.01",
+            "income": "$671.12",
+            "Personnel CME": "$781.45",
+            "Total Spent": "$390.50",
+            "Balance": "$610.63"
+        },
+        {
+            "Provider": "Jiangsu Province JianErKang Medical Dressing Co. ,Ltd.",
+            "Pavillion": "Alcohol Prep Pad",
+            "Fund": "T618X4",
+            "Quote": "$652.72",
+            "income": "$867.04",
+            "Personnel CME": "$572.64",
+            "Total Spent": "$587.85",
+            "Balance": "$853.85"
+        },
+        {
+            "Provider": "REMEDYREPACK INC.",
+            "Pavillion": "Isoniazid",
+            "Fund": "Z323",
+            "Quote": "$265.20",
+            "income": "$304.48",
+            "Personnel CME": "$564.48",
+            "Total Spent": "$543.80",
+            "Balance": "$526.93"
+        },
+        {
+            "Provider": "SJ Creations, Inc.",
+            "Pavillion": "Cucumber Lime Antibacterial Foaming Hand Wash",
+            "Fund": "O29021",
+            "Quote": "$473.76",
+            "income": "$269.43",
+            "Personnel CME": "$794.28",
+            "Total Spent": "$862.13",
+            "Balance": "$612.83"
+        },
+        {
+            "Provider": "McKesson Packaging Services a business unit of McKesson Corporation",
+            "Pavillion": "donepezil hydrochloride",
+            "Fund": "S72399B",
+            "Quote": "$794.59",
+            "income": "$476.09",
+            "Personnel CME": "$770.50",
+            "Total Spent": "$459.58",
+            "Balance": "$194.17"
+        },
+        {
+            "Provider": "Morton Grove Pharmaceuticals, Inc.",
+            "Pavillion": "Lactulose",
+            "Fund": "T468X",
+            "Quote": "$591.28",
+            "income": "$729.75",
+            "Personnel CME": "$712.15",
+            "Total Spent": "$590.07",
+            "Balance": "$474.75"
+        },
+        {
+            "Provider": "Eli Lilly and Company",
+            "Pavillion": "Cialis",
+            "Fund": "S72062E",
+            "Quote": "$594.71",
+            "income": "$197.18",
+            "Personnel CME": "$80.21",
+            "Total Spent": "$260.23",
+            "Balance": "$875.41"
+        },
+        {
+            "Provider": "Nelco Laboratories, Inc.",
+            "Pavillion": "Penicillium notatum",
+            "Fund": "T22129",
+            "Quote": "$388.64",
+            "income": "$4.76",
+            "Personnel CME": "$526.95",
+            "Total Spent": "$910.31",
+            "Balance": "$885.61"
+        }
+    ]
+}

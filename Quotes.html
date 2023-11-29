@@ -1,0 +1,775 @@
+<!-- <div class="row col-md-12"style="margin: 8px 0px 0px 0px;">
+  <div class="card">
+      <div class="card-body">
+          <h1 class="card-title">
+              <span class="typeName text-uppercase"></span>
+          </h1>
+      </div>
+  </div>
+</div> -->
+<div id="PRS" data-table="PRS" class="rounded-2"></div>
+
+<div id="T-32" data-table="t32" class="rounded-2"></div>
+
+<div class="modal fade" id="loadModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Record <span id="recordID" class="badge bg-primary"></span> Details </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body"></div>
+        <div class="modal-footer">
+          <button id="save" type="button" class="btn btn-primary" style="display:none"><i class="fas fa-save"></i> Save New Record</button>
+          <button id="update" type="button" class="btn btn-success" style="display:none"><i class="fad fa-sync-alt"></i> Update</button>
+          <button id="soft_delete" type="button" class="btn btn-warning" style="display:none"><i class="fas fa-trash"></i> Delete</button>
+          <input type="hidden" id="ID" class="form-control">
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+    $(document).ready(function(){
+        var type = $("#LoadContent").data("type");
+        
+        if(type=='T32'){
+            $(".typeName").text(type+'-Checkbook');
+            loadT32(type)
+            T32ModalForm();
+        }else if(type=='PRS_FUND'){
+            $(".typeName").text(type.split('_')[0]+'-Fund');
+            loadPRS()
+            rpsModalForm()
+        };
+        //PO field slide down if PO is selected as purchase method
+        $('#purchaseMethod').on('change', function(){
+            if($(this).val() == 'PO'){
+                $('#po').val('').slideDown();
+            }else{
+                $('#po').slideUp();
+            }
+        });
+        
+        //subtract credit from debit and display in credit field
+         //Employee search function
+         $('#emplid').on('keyup', function() {
+            $('.returnMessage').removeClass('alert alert-danger').empty() 
+            var x = $(this).val();
+            
+            if (x != '') {
+                employeeSearch(x)
+            } else {
+                $(this).attr('emplid','');
+                $('#results').hide();
+                $('#addUser').removeClass('btn-warning').addClass('btn-secondary');
+                $('#searching').html('O');
+            }
+        });
+        //on modal dismiss reset modal fields to default values and set buttons to default
+        $('#loadModal').on('hidden.bs.modal', function (e) {
+            $('#recordID').html('');
+            $('#ID').val('');
+            $('#cfs').val('');
+            $('#vendorname').val('');
+            $('#vendorID').val('');
+            $('#emplid').val('');
+            $('#expensed_date').val('');
+            $('#requisition_date').val('');
+            $('#notes').val('');
+            $('#debit').val('');
+            $('#credit').val('');
+            $('#PO').val('');
+            $('#type').val('Select Transaction Type');
+            $("#ID, #cfs, #vendorname, #vendorID, #emplid, #expensed_date, #requisition_date, #notes, #debit, #credit, #po").attr("disabled",true);
+            $("textarea").attr("disabled",true);
+            $("#paymentMethod").attr("disabled",true);
+            $('#paymentMethod').val('Select Payment Method');
+            $('.title').html('');
+            $('#soft_delete').removeClass('btn-danger').addClass('btn-warning').html('<i class="fas fa-trash"></i> Delete');
+        });
+        
+
+        $('#soft_delete').on('click', function() {
+            $(this).toggleClass('btn-warning btn-danger').html('<i class="fad fa-trash-alt"></i> Are you sure?');
+            var x = $('#ID').val();
+            var t = $(this).data('type');
+            $(this).on('click', function() {
+                $.ajax({
+                    url: 'assets/CFCs/functions.cfc',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: { method: "MGTT32", MGT_TYPE: 'soft_delete', ID: x },
+                    success: function(data) {
+                        $('#loadModal').modal('hide');
+                        reLoadT32()
+                    }
+                });
+            });
+        });
+
+        $('#update').on('click', function() {
+            alert('Click Boom')
+            var x = $('#ID').val();
+            var cfs = $('#cfs').val();
+            var vendorname = $('#vendorname').val();
+            var vendorID = $('#vendorID').val();
+            var emplid = $('#emplid').val();
+            var expensed_date = $('#expensed_date').val();
+            var requisition_date = $('#requisition_date').val();
+            var notes = $('#notes').val();
+            var debit = $('#debit').val();
+            var po = $('#po').val();
+            var credit = $('#credit').val();
+            var type = $('#type').val();
+            var paymentMethod = $('#paymentMethod').val();
+            console.log(x, cfs, vendorname, vendorID, emplid, expensed_date, requisition_date, notes, debit, credit, po, type, paymentMethod)
+            $.ajax({
+                url: 'assets/CFCs/functions.cfc',
+                type: 'GET',
+                dataType: 'json',
+                data: { method: "MGTT32", MGT_TYPE: 'edit', ID: x, CFS: cfs, VENDORNAME: vendorname, VENDORID: vendorID, EMPLID: emplid, EXPENSED_DATE: expensed_date, REQUISITION_DATE: requisition_date, NOTES: notes, DEBIT: debit, CREDIT: credit, PO: po, TRANSACTION_TYPE: type, PAYMENT_METHOD: paymentMethod },
+                success: function(data) {
+                    $('#loadModal').modal('hide');
+                    reLoadT32()
+                }
+            });
+        });
+        
+        $('#save').on('click', function() {
+            var cfs = $('#cfs').val();
+            var vendorname = $('#vendorname').val();
+            var vendorID = $('#vendorID').val();
+            var emplid = $('#emplid').val();
+            var expensed_date = $('#expensed_date').val();
+            var requisition_date = $('#requisition_date').val();
+            var notes = $('#notes').val();
+            var debit = $('#debit').val();
+            var credit = $('#credit').val();
+            var po = $('#po').val();
+            var type = $('#type').val();
+            var paymentMethod = $('#paymentMethod').val();
+            console.log(cfs, vendorname, vendorID, emplid, expensed_date, requisition_date, notes, debit, credit, po, type,paymentMethod)
+            $.ajax({
+                url: 'assets/CFCs/functions.cfc',
+                type: 'GET',
+                dataType: 'json',
+                data: { method: "MGTT32", MGT_TYPE: 'add', CFS: cfs, VENDORNAME: vendorname, VENDORID: vendorID, EMPLID: emplid, EXPENSED_DATE: expensed_date, REQUISITION_DATE: requisition_date, NOTES: notes, DEBIT: debit, CREDIT: credit, PO: po, TYPE: type, PAYMENT_METHOD: paymentMethod },
+                success: function(data) {
+                    $('#loadModal').modal('hide');
+                    reLoadT32()
+                }
+            });
+        });
+
+        $('#type').change(function(){
+            var txt = $(this).val();
+            $("input[disabled]").removeAttr("disabled");
+            $("textarea[disabled]").removeAttr("disabled");
+            $("select[disabled]").removeAttr("disabled");
+            $('.title').html(txt);
+            if($(this).val() == 'Travel'){
+                $('.reqDate').html('TRAVEL DATE');
+                $('#credit').val('1000');
+            }else if($(this).val() == 'M & O'){
+                $('.reqDate').html('REQUEST DATE');
+                $('#credit').val('8850');
+            }else if($(this).val() == 'Miscellaneous'){
+                $('.reqDate').html('REQUEST DATE');
+                $('#credit').val('2500');
+            }
+        });
+    });
+    function loadT32(){
+        //create HTML table for T32-Checkbook
+        var tbl = '';
+            tbl += '<div class="card mt-1">';
+            tbl += '<div class="card-body">';
+            tbl += '<div class="row">';
+            tbl += '<div class="col">';
+            tbl += '<h1>T-32 Checkbook</h1>';
+            tbl += '</div>';
+            tbl += '<div class="col-md-2">';
+            tbl += '<div class="form-floating">';
+            tbl += '<select id="fiscalYearDropdown" class="form-select"aria-label="Fiscal Year"></select>';
+            tbl += '<label for="fiscalYearDropdown">Select Fiscal Year</label>';
+            tbl += '</div>';
+            tbl += '</div>';
+            tbl += '</div>';
+            tbl += '</div>';
+            tbl += '</div>';
+            tbl += '<div class="card mt-1 mb-2">';
+            tbl += '<div class="card-body">';
+            tbl += '<table id="T32Tbl" class="table table-striped table-bordered table-hover" style="margin-top:10px;">';
+            tbl += '<thead>';
+            tbl += '<tr>';
+            tbl += '<th>ID</th>';
+            tbl += '<th>CFS</th>';
+            tbl += '<th>VENDORNAME</th>';
+            tbl += '<th>VENDORID</th>';
+            tbl += '<th>EMPLID</th>';
+            tbl += '<th>EXPENSED_DATE</th>';
+            tbl += '<th>REQUISITION_DATE</th>';
+            tbl += '<th>NOTES</th>';
+            tbl += '<th>TYPE</th>';
+            tbl += '<th>DEBIT</th>';
+            tbl += '<th>CREDIT</th>';
+            tbl += '</tr>';
+            tbl += '</thead>';
+            tbl += '<tbody>';
+            tbl += '</tbody>';
+            tbl += '</table>';
+            tbl += '</div>';
+            tbl += '</div>';
+            $('#T-32').html(tbl);
+            $('#T32Tbl thead th').each( function () {
+                var title = $(this).text();
+                $(this).html( '<input type="text" class="form-control" placeholder="'+title+'" />' );
+            });
+            createFiscalYearDropdown('#fiscalYearDropdown');
+            loadT32DT();
+    }
+    function reLoadT32(){
+        $('#T32Tbl').DataTable().ajax.reload();
+        //reset soft_delete button to default
+        $('#soft_delete').removeClass('btn-danger').addClass('btn-warning').html('<i class="fas fa-trash"></i> Delete');
+    }
+    function loadT32DT(){
+        var table =  $('#T32Tbl').DataTable({
+            "ajax": "assets/CFCs/functions.cfc?method=getT32",
+            "columns": [
+                      { data: 'ID' },
+                      { data: 'CFS'},
+                      { data: 'VENDORNAME' },
+                      { data: 'VENDORID' },
+                      { data: 'EMPLID' },
+                      { data: 'EXPENSED_DATE' },
+                      { data: 'REQUISITION_DATE' },
+                      { data: 'NOTES' },
+                      { data: 'TYPE' },
+                      { data: 'DEBIT' },
+                      { data: 'CREDIT' }
+            ],"order": [[0, "asc"]],
+                  "paging": true,
+                  "ordering": true,
+                  "info": true,
+                  "searching": true,
+                  //"scrollY": "550px",
+                  "scrollCollapse": true,
+                  "paging": true,
+            "ordering": true,
+            pageLength: 5,
+            lengthMenu: [10, 25, 50, 75, 100],
+            buttons: [
+                    { 
+                        text: 'Add New', action: function ( e, dt, node, config ) {
+                              $('.title').html('');
+                              // Logic for adding a new record
+                              if ($('#ID').val() != '') {
+                                $('#recordID').html('');
+                                $('#ID').val('');
+                                $('#cfs').val('');
+                                $('#vendorname').val('');
+                                $('#vendorID').val('');
+                                $('#emplid').val('');
+                                $('#expensed_date').val();
+                                $('#expensed_date').val('');
+                                $('#requisition_date').val('');
+                                $('#notes').val('');
+                                $('#debit').val('');
+                                $('#credit').val('');
+                                $('#type').val('Select Transaction Type');
+                                $("input").attr("disabled",true);
+                                $("textarea").attr("disabled",true);
+                                $("select").attr("disabled",true);
+                              }
+                              $('#loadModal').modal('show');
+                              $('#save').show();
+                              $('#update').hide();
+                              $('#soft_delete').hide();
+                          },
+                            className: 'mb-2'
+                      },{ text: 'Save Excel',
+                          action: function(e, dt, node, config) {
+                              var originalData = dt.rows().data().toArray();
+                              if (originalData.length === 0) return;
+                              var excludeKeys = ['CREATEDBYDATE', 'ENTEREDBYID', 'UPDATEDDATE', 'UPDATEDBYID', 'PRIMARY_BALANCE'];
+                              var data = originalData.map(function(obj) {
+                                  var newObj = Object.assign({}, obj);
+                                  excludeKeys.forEach(function(key) {
+                                      delete newObj[key];
+                                  });
+                                  return newObj;
+                              });
+                              var headers = ['ID', 'CFS', 'VENDORNAME', 'VENDORID', 'EMPLID', 'EXPENSED_DATE', 'REQUISITION_DATE', 'NOTES', 'TYPE', 'DEBIT', 'CREDIT', 'STATUS'];
+                              var wb = XLSX.utils.book_new();
+                              var ws = XLSX.utils.json_to_sheet(data, { header: headers });
+                              XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+                              XLSX.writeFile(wb, 'T32-Checkbook.xlsx');
+                          },
+                          className: 'mb-2'
+                      },{
+                            extend: 'pdfHtml5',
+                            text: 'Save PDF',
+                            className: 'mb-2',
+                            orientation: 'landscape', // Optional: landscape or portrait
+                            pageSize: 'A4', // Optional: 'A3', 'A5', 'A4', 'LEGAL', 'LETTER' etc.
+                            title: 'T32 Checkbook', // Optional: Title for the PDF
+                            exportOptions: {
+                                columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], // Specify the columns you want to export
+                            }
+                        }
+                  ],
+                  dom: "Blrtip",
+                  select: true
+        });
+        
+        $('#T32Tbl tbody').on('click', 'tr', function() {
+              var data = table.row(this).data();
+              // Populate the modal with the data if the row is clicked
+              //console.log(data)
+              $('#recordID').html(data.ID);
+              $('#ID').val(data.ID);
+              //console.log(data.ID)
+              $('#cfs').val(data.CFS);
+              $('#vendorname').val(data.VENDORNAME);
+              $('#vendorID').val(data.VENDORID);
+              $('#emplid').val(data.EMPLID);
+              $('#expensed_date').val(moment(data.EXPENSED_DATE).format('YYYY-MM-DD'));
+              $('#requisition_date').val(moment(data.REQUISITION_DATE).format('YYYY-MM-DD'));
+              $('#notes').val(data.NOTES);
+              $('#debit').val(data.DEBIT);
+              $('#credit').val(data.CREDIT);
+              $('#type').val(data.TYPE);
+              //remove disabled from input fields
+              $("input[disabled]").removeAttr("disabled");
+              $("textarea[disabled]").removeAttr("disabled");
+              $('.title').html(data.TYPE);
+              $('#soft_delete').attr('data-type',type);
+
+              // Open the modal
+              $('#loadModal').modal('show');
+              $('#update').show();
+              $('#soft_delete').show();
+              $('#save').hide();
+          });
+            table.buttons().container().appendTo('#T32Tbl_wrapper .col-md-6:eq(0)');
+            table.columns().every( function () {
+                var that = this;
+                $( 'input', this.header() ).on( 'keyup change', function () {
+                    if ( that.search() !== this.value ) {
+                        that.search( this.value ).draw();
+                    }
+                });
+            });
+    }
+
+    function loadPRS(){
+        //create HTML table for PRS-Funds
+        var tbl = '';
+            tbl += '<div class="card mt-1">';
+            tbl += '<div class="card-body">';
+            tbl += '<div class="row">';
+            tbl += '<div class="col">';
+            tbl += '<h1>PRS Funds</h1>';
+            tbl += '</div>';
+            tbl += '<div class="col-md-2">';
+            tbl += '<div class="form-floating">';
+            tbl += '<select id="fiscalYearDropdown" class="form-select"aria-label="Fiscal Year"></select>';
+            tbl += '<label for="fiscalYearDropdown">Select Fiscal Year</label>';
+            tbl += '</div>';
+            tbl += '</div>';
+            tbl += '</div>';
+            tbl += '</div>';
+            tbl += '</div>';
+            tbl += '<div class="card mt-1 mb-2">';
+            tbl += '<div class="card-body">';
+            tbl += '<table id="PRSTbl" class="table table-striped table-bordered table-hover" style="margin-top:10px;">';
+            tbl += '<thead>';
+            tbl += '<tr>';
+            tbl += '<th>ID</th>';
+            tbl += '<th>CFS ID</th>';
+            tbl += '<th>FELLOW</th>';
+            tbl += '<th>CONFERENCE / LOCATION</th>';
+            tbl += '<th>START DATE</th>';
+            tbl += '<th>END DATE</th>';
+            tbl += '<th>SUBMISSION</th>';
+            tbl += '</tr>';
+            tbl += '</thead>';
+            tbl += '<tbody>';
+            tbl += '</tbody>';
+            tbl += '</table>';
+            tbl += '</div>';
+            tbl += '</div>';
+            $('#PRS').html(tbl);
+            $('#PRSTbl thead th').each( function () {
+                var title = $(this).text();
+                $(this).html( '<input type="text" class="form-control" placeholder="'+title+'" />' );
+            });
+            createFiscalYearDropdown('#fiscalYearDropdown');
+            loadPRSDT();
+            getCFS();
+    }
+
+    //////////////////
+    //PRS Functions //
+    //////////////////
+    function loadPRSDT(){
+        
+        var prsTbl =  $('#PRSTbl').DataTable({
+                "ajax": "assets/CFCs/functions.cfc?method=getPRS_FUND",
+                "columns": [
+                        { data: 'ID' },
+                        { data: 'CFS_ID'},
+                        { data: 'FELLOW' },
+                        { data: 'DESCRIPTION' },
+                        { data: 'START_DATE' },
+                        { data: 'END_DATE' },
+                        { data: 'SUBMISSION_STATUS' }
+                ],"order": [[0, "asc"]],
+                    "paging": true,
+                    "ordering": true,
+                    "info": true,
+                    "searching": true,
+                    //"scrollY": "550px",
+                    "scrollCollapse": true,
+                    "paging": true,
+                "ordering": true,
+                pageLength: 10,
+                lengthMenu: [10, 25, 50, 75, 100],
+                buttons: [
+                        { 
+                            className: 'mb-2',
+                            text: 'Add New', action: function ( e, dt, node, config ) {
+                                $('.title').html('');
+                                // Logic for adding a new record
+                                if ($('#ID').val() != '') {
+                                    $('#CFS_ID').html('');
+                                    $('#FELLOW').val('');
+                                    $('#DESCRIPTION').val('');
+                                    $('#START_DATE').val('');
+                                    $('#END_DATE').val('');
+                                    $('#SUBMISSION_STATUS').val();
+                                    $("input").attr("disabled",true);
+                                    $("textarea").attr("disabled",true);
+                                }
+                                $('#loadModal').modal('show');
+                                $('#save').show();
+                                $('#update').hide();
+                                $('#soft_delete').hide();
+                            }
+                            
+                        },{ 
+                            className: 'mb-2',
+                            text: 'Download Excel',
+                            action: function(e, dt, node, config) {
+                                var originalData = dt.rows().data().toArray();
+                                if (originalData.length === 0) return;
+                                var excludeKeys = ['CREATEDBYDATE', 'ENTEREDBYID', 'UPDATEDDATE', 'UPDATEDBYID', 'PRIMARY_BALANCE'];
+                                var data = originalData.map(function(obj) {
+                                    var newObj = Object.assign({}, obj);
+                                    excludeKeys.forEach(function(key) {
+                                        delete newObj[key];
+                                    });
+                                    return newObj;
+                                });
+                                var headers = ['ID', 'CFS_ID', 'FELLOW', 'DESCRIPTION', 'START_DATE', 'END_DATE', 'SUBMISSION_STATUS'];
+                                var wb = XLSX.utils.book_new();
+                                var ws = XLSX.utils.json_to_sheet(data, { header: headers });
+                                XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+                                XLSX.writeFile(wb, 'PRS-Funds.xlsx');
+                            }
+                        },{
+                                extend: 'pdfHtml5',
+                                text: 'Save PDF',
+                                className: 'mb-2',
+                                orientation: 'landscape', // Optional: landscape or portrait
+                                pageSize: 'A4', // Optional: 'A3', 'A5', 'A4', 'LEGAL', 'LETTER' etc.
+                                title: 'PRS Funds', // Optional: Title for the PDF
+                                exportOptions: {
+                                    columns: [0, 1, 2, 3, 4, 5, 6], // Specify the columns you want to export
+                                }
+                            }
+                    ],
+                    dom: "Blrtip",
+                    select: true            
+        });
+        $('#PRSTbl tbody').on('click', 'tr', function() {
+              var data = prsTbl.row(this).data();
+              // Populate the modal with the data if the row is clicked
+              console.log(data)
+              $('#recordID').html(data.ID);
+              $('#CFS_ID').val(data.CFS_ID);
+              $('#FELLOW').val(data.FELLOW);
+              $('#EMPLID').val(data.EMPLID);
+              $('#DESCRIPTION').val(data.DESCRIPTION);
+              $('#START_DATE').val(moment(data.START_DATE).format('YYYY-MM-DD'));
+              $('#END_DATE').val(moment(data.END_DATE).format('YYYY-MM-DD'));
+              $('#SUBMISSION_STATUS').val(data.SUBMISSION_STATUS);
+              //remove disabled from input fields
+              $("input[disabled]").removeAttr("disabled");
+              $("textarea[disabled]").removeAttr("disabled");
+              $('.title').html(data.ID);
+              $('#soft_delete').attr('data-type','');
+
+              // Open the modal
+              $('#loadModal').modal('show');
+              $('#update').show();
+              $('#soft_delete').show();
+              $('#save').hide();
+          });
+          prsTbl.buttons().container().appendTo('#PRSTbl_wrapper .col-md-6:eq(0)');
+          prsTbl.columns().every( function () {
+                var that = this;
+                $( 'input', this.header() ).on( 'keyup change', function () {
+                    if ( that.search() !== this.value ) {
+                        that.search( this.value ).draw();
+                    }
+                });
+            });
+
+        $('#cfsFilter').on('change', function() {
+            prsTbl.column(2).search(this.value).draw();
+        });
+        
+    }
+
+    function getCFS(){
+        $.ajax({
+        url: 'assets/CFCs/functions.cfc',
+        type: 'GET',
+        dataType: 'json',
+        data: { method: "getCFS"},
+        success: function(data) {
+            var x = data.items;
+            var str = '<option value="Select CFS">Select CFS</option>';
+            for (var i = 0; i < x.length; i++) {
+                str += '<option value="' + x[i].CFS_ID + '">' + x[i].DEPTID + '-' + x[i].FUND_GROUP + '-' + x[i].FUND + '-' + x[i].FUND_TYPE + '</option>';
+            }
+            $('#cfs').html(str);
+            }
+        });
+    }
+
+
+
+    function tblResetAll(tableName){
+        tableName.clear().search('').columns().search('').order([]).page('first').draw();
+    }
+
+    //Employee search function
+    function employeeSearch(x) {
+        var str = x.split(" ");
+        if (/\s/.test(str)) {
+            var x = str[1] + '%' + str[0]
+        }
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: "assets/CFCs/functions.cfc",
+            data: {
+                method: "searchEmployees",
+                searchStr: x
+            },
+            beforeSend: function() {
+                $('#searching').html('<span style="color: rgb(59, 91, 152)"><i class="fas fa-spinner fa-spin"></i></span>');
+            },
+            success: function(response) {
+                var x = response.items;
+                console.log(x)
+                var str = '<div class="list-group">';
+                for (var i = 0; i < x.length; i++) {
+                    str += '<a href="#"  class="list-group-item list-group-item-action" id="searchResults_' + x[i].emplID + '" phone ="' + x[i].phone + '" location ="' + x[i].location + '" jobTitle ="' + x[i].jobTitle + '" departmentname ="' + x[i].departmentname + '"  username ="' + x[i].username + '" orgcode="' + x[i].orgcode + '" email="' + x[i].email + '" fullName="' + x[i].fullName + '" emplid="' + x[i].emplID + '" display = "' + x[i].fullName + '">(' + x[i].emplID + ') <span style="color:royalblue; font-weight:bold">' + x[i].fullName + '</span> <span style="color:orange">'+x[i].departmentname+'</span></a>';
+                }
+                str += '</div>';
+                $('#results').css({'z-index':'100000','overflow-y':'scroll'}).html(str).show();
+                
+                $("a[id^='searchResults_'").on('click', function() {
+                    var disName = $(this).attr('display');
+                    var email = $(this).attr('email');
+                    var orgcode = $(this).attr('orgcode');
+                    var userid = $(this).attr('username');
+                    var emplid = $(this).attr('emplid');
+                    var fullName = $(this).attr('fullName');
+                    var departmentname = $(this).attr('departmentname');
+                    var location = $(this).attr('location');
+                    var jobTitle = $(this).attr('jobTitle');
+                    var phone = $(this).attr('phone');
+
+                    $('#emplid').val(emplid).attr({
+                        'EMPLID': emplid
+                    }).focus();
+                    $('#vendorname').val(fullName).removeClass('placeholder');
+                    $('#vendorID').val(emplid).removeClass('placeholder');
+
+                    $('#STEWARD_NAME').val(fullName).removeClass('placeholder');
+                    $('#EMPLID').html(' ('+emplid+')').removeClass('placeholder');
+                    $('#FULL_NAME').html(fullName).removeClass('placeholder').append(' <br> ');
+                    $('#JOBTITLE').html(jobTitle).removeClass('placeholder').append(' <br> ');
+                    $('#DEPARTMENT').html(departmentname +' ('+orgcode+')').removeClass('placeholder').append(' <br> ');
+                    $('#EMAIL_ADDRESS').html(email).removeClass('placeholder').append(' <br> ');
+                    $('#LOCATION').html(location).removeClass('placeholder').append(' - ');
+                    $('#PHONE').html(phone).removeClass('placeholder');
+                    $('#results').hide();
+					
+                });
+            },
+            complete: function() {
+                $('#searching').html('O');
+            }
+        })
+
+    }
+
+    function rpsModalForm(){
+        var prs = '';
+            prs += '<div class="row g-3">';
+            prs += '<div class="col-12">';
+            prs += '<label for="CFS_ID" class="form-label fw-bold text-uppercase">CFS:</label>';
+            prs += '<span>XXXXXX-XX-XXXXXX-XX-(MDGRN or MDACC)-XXXXXXXX-XX </span>';
+            prs += '</div>';
+            prs += '<div class="col-12">';
+            prs += '<label for="DESCRIPTION" class="form-label fw-bold text-uppercase">DESCRIPTION:</label>';
+            prs += '<textarea type="text" class="form-control" id="DESCRIPTION" col="3"></textarea>';
+            prs += '</div>';
+            prs += '<div class="col-md-6">';
+            prs += '<label for="EMPLID" class="form-label fw-bold text-uppercase">EMPLID</label>';
+            prs += '<input type="text" class="form-control" id="EMPLID">';
+            prs += '</div>';
+            prs += '<div class="col-md-6">';
+            prs += '<label for="FELLOW" class="form-label fw-bold text-uppercase">FELLOW</label>';
+            prs += '<input type="text" class="form-control" id="FELLOW">';
+            prs += '</div>';
+            prs += '<div class="col-md-6">';
+            prs += '<label for="START_DATE" class="form-label fw-bold text-uppercase">Travel START DATE</label>';
+            prs += '<input type="date" class="form-control" id="START_DATE">';
+            prs += '</div>';
+            prs += '<div class="col-md-6">';
+            prs += '<label for="END_DATE" class="form-label fw-bold text-uppercase">Travel END DATE </label>';
+            prs += '<input type="date" class="form-control" id="END_DATE">';
+            prs += '</div>';
+            prs += '<div class="col-md-6">';
+            prs += '<label for="START_DATE" class="form-label fw-bold text-uppercase">Submission DATE</label>';
+            prs += '<input type="date" class="form-control" id="START_DATE">';
+            prs += '</div>';
+            prs += '<div class="col-md-3">';
+            prs += '<label  for="SUBMISSION_STATUS" class="fw-bold text-uppercase">SUBMISSION STATUS</label>';
+            prs += '<select class="form-select" id="SUBMISSION_STATUS">';
+            prs += '<option selected>Choose...</option>';
+            prs += '<option value="Pending">Pending</option>';
+            prs += '<option value="Denied">Denied</option>';
+            prs += '<option value="Approved">Approved</option>';
+            prs += '</select>';
+            prs += '</div>';
+            prs += '</div>';
+            $('.modal-body').html(prs);
+    }
+
+    function T32ModalForm(){
+        var t32 = '';
+        t32 += '<div class="row">';
+        t32 += '<div class="col-3">';
+        t32 += '<span id="modal-type">';
+        t32 += '<label for="type" class="form-label fw-bold text-uppercase">Transaction Type</label>';
+        t32 += '<select name="type" id="type" class="form-control">';
+        t32 += '<option selected>Select Transaction Type</option>';
+        t32 += '<option value="Travel">Travel</option>';
+        t32 += '<option value="M & O">M & O</option>';
+        t32 += '<option value="Miscellaneous">Miscellaneous</option>';
+        t32 += '</select>';
+        t32 += '</span>';
+        t32 += '</div>';
+        t32 += '<div class="col-6">';
+        t32 += '<h2 class="text-center text-uppercase text-black d-block align-content-center">transactions<br><small class="title text-muted fst-italic fs-4 mt-0"></small></h2>';
+        t32 += '</div>';
+        t32 += '<div class="col-3">';
+        t32 += '<span id="modal-credit">';
+        t32 += '<label for="credit" class="form-label fw-bold text-uppercase">Credit</label>';
+        t32 += '<div class="input-group mb-3">';
+        t32 += '<span class="input-group-text" id="basic-addon1">$</span>';
+        t32 += '<input name="credit" id="credit" type="text" class="form-control" aria-describedby="basic-addon1" disabled>';
+        t32 += '</div>';
+        t32 += '</span>';
+        t32 += '</div>';
+        t32 += '</div>';
+        t32 += '<hr>';
+        t32 += '<div class="row mb-2">';
+        t32 += '<div class="col">';
+        t32 += '<span id="modal-cfs">';
+        t32 += '<label for="cfs" class="form-label fw-bold text-uppercase">Chart Field String</label>';
+        t32 += '<input name="cfs" id="cfs" type="text" class="form-control" disabled>';
+        t32 += '</span>';
+        t32 += '</div>';
+        t32 += '</div>';
+        t32 += '<div class="row">';
+        t32 += '<div class="col">';
+        t32 += '<span id="modal-emplid">';
+        t32 += '<label for="emplid" class="form-label fw-bold text-uppercase">EMPL<span id="searching">O</span>YEE SEARCH</span></label>';
+        t32 += '<input name="emplid" id="emplid" type="text" class="form-control" placeholder="Employee ID" disabled />';
+        t32 += '<div id="results" style="color:#000;margin-top:5px;max-height: 350px; z-index: 10; position: relative;"></div>';
+        t32 += '</span>';
+        t32 += '</div>';
+        t32 += '<div class="col"> '; 
+        t32 += '<span id="modal-vendorID">';
+        t32 += '<label for="vendorID" class="form-label fw-bold text-uppercase">Vendor ID</label>';
+        t32 += '<input name="vendorID" id="vendorID" type="text" class="form-control" placeholder="Vendor ID" disabled>';
+        t32 += '</span>';
+        t32 += '</div>';
+        t32 += '<div class="col">';
+        t32 += '<span id="modal-vendorname">';
+        t32 += '<label for="vendorname" class="form-label fw-bold text-uppercase">Vendor Name</label>';
+        t32 += '<input name="vendorname" id="vendorname" type="text" class="form-control" placeholder="Vendor name" disabled>';
+        t32 += '</span>';
+        t32 += '</div>';
+        t32 += '</div>';
+        t32 += '<div class="row mt-2">';
+        t32 += '<div class="col">';
+        t32 += '<span id="modal-requisition_date">';
+        t32 += '<label for="requisition_date" class="reqDate form-label fw-bold text-uppercase">request Date</label>';
+        t32 += '<input name="requisition_date" id="requisition_date" type="date" class="form-control" disabled/>';
+        t32 += '</span>';
+        t32 += '</div>';
+        t32 += '<div class="col">';
+        t32 += '<span id="modal-expensed_date">';
+        t32 += '<label for="expensed_date" class="form-label fw-bold text-uppercase">Expense Date</label>';
+        t32 += '<input name="expensed_date" id="expensed_date" type="date" class="form-control" disabled/>';
+        t32 += '</span>';
+        t32 += '</div>';
+        t32 += '</div>';
+        t32 += '<div class="row mt-2">';
+        t32 += '<div class="col">';
+        t32 += '<span id="modal-notes">';
+        t32 += '<label for="notes" class="form-label fw-bold text-uppercase">Description</label>';
+        t32 += '<textarea name="notes" id="notes" type="text" class="form-control" placeholder="Description" disabled></textarea>';
+        t32 += '</span>';
+        t32 += '</div>';
+        t32 += '</div>';
+        t32 += '<div class="row mt-2">';
+        t32 += '<div class="col">';
+        t32 += '<span id="modal-debit">';
+        t32 += '<label for="debit" class="form-label fw-bold text-uppercase">Debit / Cost</label>';
+        t32 += '<input name="debit" id="debit" type="text" class="form-control" disabled />';
+        t32 += '</span>';
+        t32 += '</div>';
+        t32 += '<div class="col">';
+        t32 += '<span id="modal-purchaseMethod">';
+        t32 += '<label for="purchaseMethod" class="form-label fw-bold text-uppercase">Purchase Method</label>';
+        t32 += '<div class="row">';
+        t32 += '<div class="col">';
+        t32 += '<select id="purchaseMethod" class="form-select " disabled>';
+        t32 += '<option selected>Select Purchase Method</option>';
+        t32 += '<option value="PO">PO</option>';
+        t32 += '<option value="PROCARD">ProCard</option>';
+        t32 += '<option value="CONCUR">Concur</option>';
+        t32 += '</select>';
+        t32 += '</div>';
+        t32 += '<div class="col">';
+        t32 += '<input name="po" id="po" type="text" class="form-control" placeholder="Purchase Order" style="display: none;" disabled />';
+        t32 += '</div>';
+        t32 += '</div>';
+        t32 += '</span>';
+        t32 += '</div>';
+        t32 += '</div>';
+        $('.modal-body').html(t32);
+    }
+</script>

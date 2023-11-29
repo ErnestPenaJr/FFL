@@ -1,0 +1,473 @@
+
+    <div class="row" style="margin: 8px 0px 0px 0px;font-size: 12px;">
+        <div class="col-md-12">
+        
+        <div class="row glass rounded border border-light p-3">
+            <div class="row mb-6">
+                <div class="col-2">
+                    <label for="effectiveDate" class="form-label">Effective From Date</label>
+                    <input id="effectiveDate" class="form-control form-control-sm" type="date" />
+                </div>
+                <div class="col-2">
+                    <label for="Date" class="form-label">Effective To Date</label>
+                    <input id="Date" class="form-control form-control-sm" type="date" />
+                </div>
+                <div class="col-4">
+                    <label for="vendor" class="form-label">Vendor</label>
+                    <select id="vendor" class="form-select form-select-sm">
+                        <option value="0">Select Vendor</option>
+                    </select>
+                </div>
+                <div class="col-2">
+                    <span >PRS</span><br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="CME_Item" id="CME_Item" value="Yes">
+                        <label class="form-check-label" for="CME_Item">Yes</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="CME_Item" id="CME_Item" value="No">
+                        <label class="form-check-label" for="CME_Item">No</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="CME_Item" id="CME_Item" value="All">
+                        <label class="form-check-label" for="CME_Item">All</label>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <span >T32</span><br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="t32" id="t32" value="Yes">
+                        <label class="form-check-label" for="t32">Yes</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="t32" id="t32" value="No">
+                        <label class="form-check-label" for="t32">No</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="t32" id="t32" value="All">
+                        <label class="form-check-label" for="t32">All</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                
+                <div class="col-4">
+                    <label for="Fund" class="form-label">Fund</label>
+                    <select id="Fund" class="form-select form-select-sm">
+                        <option value="0">Select Fund</option>
+                    </select>
+                </div>
+                <div class="col-2">
+                    <span >Reconciled</span><br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="Reconciled" id="Reconciled" value="Yes">
+                        <label class="form-check-label" for="Reconciled">Yes</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="Reconciled" id="Reconciled" value="No">
+                        <label class="form-check-label" for="Reconciled">No</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="Reconciled" id="Reconciled" value="All">
+                        <label class="form-check-label" for="Reconciled">All</label>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <label for="Transaction_Type" class="form-label">Transaction Type</label>
+                    <select id="Transaction_Type" class="form-select form-select-sm">
+                        <option value="0">Select One</option>
+                    </select>
+                </div>
+                <div class="col-2">
+                    <label for="ReconciledDate" class="form-label">Reconciled Date</label>
+                    <input id="ReconciledDate" class="form-control form-control-sm" type="date" />
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-4">
+                    <label for="PO" class="form-label">P.O. Number</label>
+                    <select id="PO" class="form-select form-select-sm">
+                        <option value="0">Select One</option>
+                    </select>
+                </div>
+                <div class="col-4">
+                    <label for="Transaction_number" class="form-label">Transaction Number</label>
+                    <select id="Transaction_number" class="form-select form-select-sm">
+                        <option value="0">Select One</option>
+                    </select>
+                </div>
+                <div class="col-2">
+                    <button class="btn btn-outline-light mt-4" id="filterdata"><i class="fas fa-filter"></i> Filter Ledger Data</button>
+                </div>
+
+                <div class="col-2">
+                    <button class="btn btn-outline-light mt-4" id="filterReset"><i class="fas fa-sync"></i> Reset Filter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row glass rounded border border-light" style="margin: 8px 0px 0px 0px;font-size: 11px;">
+        <div class="row">
+    
+            <div class="col-9 d-flex justify-content-start">
+                <button class="btn btn-primary btn-sm m-1" id="addNew" data-bs-toggle="modal" data-bs-target="#addNewModal"><i class="fas fa-plus"></i> Add New</button>
+                <button class="btn btn-primary btn-sm m-1" id="edit" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fas fa-edit"></i> Edit</button>
+                <button class="btn btn-primary btn-sm m-1" id="delete" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash-alt"></i> Delete</button>
+            </div>
+            <div class="col-2 justify-content-end">
+                <select class="form-select form-select-sm" id="recordsPerPage" style="width: 75px;">
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                </select>   
+            </div>
+            <div class="col-1 justify-content-end">
+                <nav aria-label="Page navigation">
+                    <ul id="pagination" class="pagination pagination-sm justify-content-end">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div id="ledgerData" class="col mb-2"></div>
+    </div>
+    
+    
+<script>
+//check to see if gloabal variables are set
+if (typeof currentData === 'undefined') {
+    var currentData = [];
+}
+if (typeof currentPage === 'undefined') {
+    var currentPage = 1;
+}
+if (typeof recordsPerPage === 'undefined') {
+    var recordsPerPage = 10;
+}
+if (typeof currentSortColumn === 'undefined') {
+    var currentSortColumn = null;
+}
+if (typeof currentSortDirection === 'undefined') {
+    var currentSortDirection = 'asc';
+}
+if (typeof totalPages === 'undefined') {
+    var totalPages = 0;
+}
+if (typeof sortColumn === 'undefined') {
+    var sortColumn = null;
+}   
+if (typeof sortDirection === 'undefined') {
+    var sortDirection = 'asc';
+}
+if (typeof filters === 'undefined') {
+    var filters = {};
+}
+        // let currentPage = 1;
+        // let recordsPerPage = 10; // Default value
+        // let currentData = [];
+        // let currentSortColumn = null;  // the column currently being sorted
+        // let currentSortDirection = 'asc';  // the current direction of sorting: 'asc' or 'desc'
+        // let totalPages = 0;
+        // let sortColumn = null;
+        // let sortDirection = 'asc';
+
+
+ 
+    $(document).ready(function() {
+        // Dropdown for selecting number of records per page
+        $('#recordsPerPage').on('change', function() {
+            recordsPerPage = parseInt($(this).val());
+            currentPage = 1; // Reset to the first page
+            renderData();
+            renderPagination();
+        });
+        // load data
+        loadDataFiltered()
+
+        // filter data button
+        $('#filterdata').on('click', function() {
+            loadDataFiltered();
+        });
+        
+
+        $("#pagination").on("click", ".page-link", function(e) {
+            e.preventDefault();
+            if ($(this).closest('.page-item').hasClass('disabled')) {
+                return; // If the button is disabled, exit the click handler
+            }
+            let page = parseInt($(this).data("page"));
+            
+            if ($(this).attr('aria-label') === "Previous") {
+                if (currentPage > 1) page = currentPage - 1;
+            } else if ($(this).attr('aria-label') === "Next") {
+                if (currentPage < totalPages) page = currentPage + 1;
+            }
+            
+            currentPage = page; // Set the new current page
+
+            renderData();       // Render the data for the current page
+            renderPagination(); // Refresh the pagination
+        });
+   
+        $('#ledgerData').on('click', '.list-group-item-action', function(e) {
+            e.preventDefault();
+            let recordId = $(this).attr('id'); // Assuming each record has a unique ID.
+            populateFormWithData(recordId);
+        }); 
+
+    });
+
+function loadDataFiltered() {
+    let filters = getFilterValues();
+    
+    $.ajax({
+        url: 'assets/json/Ledger.json',
+        type: "GET",
+        dataType: "json",
+        //data: { method: "getLedger", filters } // enable this when using CFC
+        data: { filters }
+    }).done(function (data) {
+        currentData =data.ledger;
+        renderData();
+        renderPagination();
+    });
+}
+
+function getFilterValues() {
+    let filters = {
+        effective_date: $('#effective_date').val() || null,
+        date: $('#date').val() || null,
+        VendorSupplier: $('#VendorSupplier').val() || null,
+        CME_Item: $('#CME_Item').val() || null,
+        Fund: $('#Fund').val() || null,
+        Reconciled: $('#Reconciled').val() || null,
+        Transaction_Type: $('#Transaction_Type').val() || null,
+        ReconciledDate: $('#ReconciledDate').val() || null,
+        PO: $('#PO').val() || null,
+        Transaction_number: $('#Transaction_number').val() || null
+    };
+    return filters;
+}
+
+function filterData(filters) {
+    return data.filter(item => {
+        return (!filters.effective_date || item.effective_date === filters.effective_date) &&
+            (!filters.date || item.date === filters.date) &&
+            (!filters.VendorSupplier || item.VendorSupplier === filters.VendorSupplier) &&
+            (!filters.CME_Item || item.CME_Item === filters.CME_Item) &&
+            (!filters.Fund || item.Fund === filters.Fund) &&
+            (!filters.Reconciled || item.Reconciled === filters.Reconciled) &&
+            (!filters.Transaction_Type || item.Transaction_Type === filters.Transaction_Type) &&
+            (!filters.ReconciledDate || item.ReconciledDate === filters.ReconciledDate) &&
+            (!filters.PO || item.PO === filters.PO) &&
+            (!filters.Transaction_number || item.Transaction_number === filters.Transaction_number);
+    });
+}
+
+
+    function populateFormWithData(recordId) {
+        let record = currentData.find(item => item.id == recordId); // Find the record by its ID from the currentData.
+        $('#effective_date').val(moment(record.Effective_Date).format('YYYY-MM-DD'));
+        $('#Transaction_num').val(record.Transaction_Number);
+        $('#VendorSupplier').val(record.VendorSupplier);
+        $('#VendorID').val(record.VendorID);
+        $('#CMEItem').val(record.CME_Item);
+        $('#FundIt').val(record.Fund);
+        $('#account').val(record.Account);
+        $('#classcode').val(record.ClassCode);
+        $('#po').val(record.PO);
+        $('#amount').val(record.Amount);
+        $('#notes').val(record.Notes);
+        $('#reconciled').val(record.Reconciled);
+    }
+
+
+    function renderData() {
+        let start = (currentPage - 1) * recordsPerPage;
+        let end = start + recordsPerPage;
+        let html = '<ul class="list-group">';
+            html += '<li class="list-group-item list-group-item-dark">';
+            html += '<div class="row">';
+            html += '<div class="col-1 text-uppercase fw-bold" data-sort="Effective_Date" onclick="sortData(\'Effective_Date\')">Effective Date <i class="far fa-sort sort-indicator"></i></div>';
+            html += '<div class="col-1 text-uppercase fw-bold" data-sort="Transaction_Number" onclick="sortData(\'Transaction_Number\')">Transaction # <i class="far fa-sort sort-indicator"></i></div>';
+            html += '<div class="col-1 text-uppercase fw-bold" data-sort="VendorSupplier" onclick="sortData(\'VendorSupplier\')">Vendor <i class="far fa-sort sort-indicator"></i></div>';
+            html += '<div class="col-1 text-uppercase fw-bold" data-sort="VendorID" onclick="sortData(\'VendorID\')">VendorID <i class="far fa-sort sort-indicator"></i></div>';
+            html += '<div class="col-1 text-uppercase fw-bold" data-sort="CME_Item" onclick="sortData(\'CME_Item\')">PRS <i class="far fa-sort sort-indicator"></i></div>';
+            html += '<div class="col-1 text-uppercase fw-bold" data-sort="Fund" onclick="sortData(\'Fund\')">Fund  <i class="far fa-sort sort-indicator"></i></div>';
+            html += '<div class="col-1 text-uppercase fw-bold" data-sort="Account" onclick="sortData(\'Account\')">Account  <i class="far fa-sort sort-indicator"></i></div>';
+            html += '<div class="col-1 text-uppercase fw-bold" data-sort="ClassCode" onclick="sortData(\'ClassCode\')">Class Code  <i class="far fa-sort sort-indicator"></i></div>';
+            html += '<div class="col-1 text-uppercase fw-bold" data-sort="PO" onclick="sortData(\'PO\')">PO# <i class="far fa-sort sort-indicator"></i></div>';
+            html += '<div class="col-1 text-uppercase fw-bold" data-sort="Amount" onclick="sortData(\'Amount\')">Amount  <i class="far fa-sort sort-indicator"></i></div>';
+            html += '<div class="col-1 text-uppercase fw-bold" data-sort="Notes" onclick="sortData(\'Notes\')">Notes  <i class="far fa-sort sort-indicator"></i></div>';
+            html += '<div class="col-1 text-uppercase fw-bold" data-sort="Reconciled" onclick="sortData(\'Reconciled\')">Reconciled  <i class="far fa-sort sort-indicator"></i></div>';
+            html += '</div>';
+            html += '</li>';
+            html += '<li class="list-group-item list-group-item-success">';
+            html += '<div class="row">';
+            html += '<div class="col-1 text-uppercase fw-bold"><input id="effective_date" type="date" class="form-control"></div>';
+            html += '<div class="col-1 text-uppercase fw-bold"><input id="Transaction_num" type="text" class="form-control"></div>';
+            html += '<div class="col-1 text-uppercase fw-bold"><input id="VendorSupplier" type="text" class="form-control"></div>';
+            html += '<div class="col-1 text-uppercase fw-bold"><input id="VendorID" type="text" class="form-control"></div>';
+            html += '<div class="col-1 text-uppercase fw-bold"><select id="CMEItem" class="form-select"><option selected></option><option value="Yes">Yes</option><option value="No">No</option><option value="All">All</option></select></div>';
+            html += '<div class="col-1 text-uppercase fw-bold"><select id="FundIt" class="form-select"><option selected></option><option value="31005 - EMS LBJ Patient Care Revenue">31005 - EMS LBJ Patient Care Revenue</option><option value="33026 - EMS - Surgery - General">33026 - EMS - Surgery - General</option><option value="33202 - Hospital">33202 - Hospital</option><option value="33239 - EM - Pediatric Division">33239 - EM - Pediatric Division</option></select></div>';
+            html += '<div class="col-1 text-uppercase fw-bold"><input id="account" type="text" class="form-control"></div>';
+            html += '<div class="col-1 text-uppercase fw-bold"><input id="classcode" type="text" class="form-control"></div>';
+            html += '<div class="col-1 text-uppercase fw-bold"><input id="po" type="text" class="form-control"></div>';
+            html += '<div class="col-1 text-uppercase fw-bold"><input id="amount" type="text" class="form-control"></div>';
+            html += '<div class="col-1 text-uppercase fw-bold"><input id="notes" type="text" class="form-control"></div>';
+            html += '<div class="col-1 text-uppercase fw-bold"><select id="reconciled" class="form-select"><option selected></option><option value="Yes">Yes</option><option value="No">No</option><option value="All">All</option></select></div>';
+            html += '</div>';
+            html += '</li>';
+        for (let i = start; i < end && i < currentData.length; i++) {
+            let x = currentData[i];
+            if(x.Reconciled === 'Yes'){}
+            html += '<a id="'+x.id+'" class="list-group-item list-group-item-action">';
+            html += '<div class="row">';
+            //html += '<div class="col-1">'+x.id+'</div>';
+            html += '<div class="col-1">'+x.Effective_Date+'</div>';
+            html += '<div class="col-1">'+x.Transaction_Number+'</div>';
+            html += '<div class="col-1">'+x.VendorSupplier+'</div>';
+            html += '<div class="col-1">'+x.VendorID+'</div>';
+            html += '<div class="col-1">'+x.CME_Item+'</div>';
+            html += '<div class="col-1">'+x.Fund+'</div>';
+            html += '<div class="col-1">'+x.Account+'</div>';
+            html += '<div class="col-1">'+x.ClassCode+'</div>';
+            html += '<div class="col-1">'+x.PO+'</div>';
+            html += '<div class="col-1">'+x.Amount+'</div>';
+            html += '<div class="col-1">'+x.Notes+'</div>';
+            html += '<div class="col-1">'+x.Reconciled+'</div>';
+            html += '</div>';
+            html += '</a>';
+        }
+        html += '</ul>';
+        $('#ledgerData').html(html);
+
+    }
+
+function renderPagination() {
+    let totalPages = Math.ceil(currentData.length / recordsPerPage);
+    let paginationHTML = "";
+    let maxPagesToShow = 6;// Define max pages to show at once
+    let halfWay = Math.ceil(maxPagesToShow / 2);
+    // Calculate the start and end pages for the dynamic window
+    let startPage = currentPage - halfWay + 1;
+    let endPage = currentPage + halfWay - 1;
+    // Adjust if near the beginning
+    if (startPage <= 0) {
+        endPage -= (startPage - 1);
+        startPage = 1;
+    }
+    // Adjust if near the end
+    if (endPage > totalPages) {
+        startPage -= (endPage - totalPages);
+        endPage = totalPages;
+    }
+    // Previous button
+    paginationHTML += `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+                          <a class="page-link" href="#" aria-label="Previous" ${currentPage === 1 ? 'tabindex="-1" aria-disabled="true"' : ''}>
+                              <span aria-hidden="true">&laquo;</span>
+                          </a>
+                       </li>`;
+
+    for (let i = startPage; i <= endPage; i++) {
+    paginationHTML += `<li class="page-item ${i === currentPage ? 'active' : ''}">
+                            <a class="page-link" href="#" data-page="${i}">${i}</a>
+                        </li>`;
+    }
+    // Next button
+    paginationHTML += `<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+                          <a class="page-link" href="#" aria-label="Next" ${currentPage === totalPages ? 'tabindex="-1" aria-disabled="true"' : ''}>
+                              <span aria-hidden="true">&raquo;</span>
+                          </a>
+                       </li>`;
+    $('#pagination').html(paginationHTML);
+
+    $('#pagination .page-link[data-page]').click(function(e) {
+            e.preventDefault();
+            currentPage = parseInt($(this).data('page'));
+            renderData();
+        });// Page number click
+        $('#pagination .page-link[aria-label="Previous"]').click(function(e) {
+            e.preventDefault();
+            if (currentPage > 1) {
+                currentPage--;
+                renderData();
+            }else if(currentPage === 1){
+                currentPage = totalPages;
+                renderData();
+            }
+        });// Previous button click
+        $('#pagination .page-link[aria-label="Next"]').click(function(e) {
+            e.preventDefault();
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderData();
+            }else if(currentPage === totalPages){
+                currentPage = 1;
+                renderData();
+            }
+        });// Next button click
+
+
+
+}
+function sortData(column) {
+    // Toggle the sort direction if the column is already being sorted
+    if (currentSortColumn === column) {
+        currentSortDirection = currentSortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+        currentSortColumn = column;
+        currentSortDirection = 'asc';  // default to ascending when sorting a new column
+    }
+
+    currentData.sort((a, b) => {
+        const valueA = a[column];
+        const valueB = b[column];
+
+        if (typeof valueA === 'string') {
+            return currentSortDirection === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+        } else if (typeof valueA === 'number') {
+            return currentSortDirection === 'asc' ? valueA - valueB : valueB - valueA;
+        }
+        return 0;
+    });
+
+    updateSortingVisuals(column);
+    renderData();
+    renderPagination();
+}
+
+function updateSortingVisuals(column) {
+    // First, remove all existing arrows
+    document.querySelectorAll('.sort-indicator').forEach(el => el.remove());
+
+    // Find the column header for the sorted column
+    const headerElement = document.querySelector(`[data-sort="${column}"]`);
+
+    if (headerElement) {
+        const iconClass = currentSortDirection === 'asc' ? 'fa-sort-up' : 'fa-sort-down';
+        const icon = document.createElement('i');
+        
+        icon.className = `far ${iconClass} sort-indicator`;
+        console.log(icon.className)
+        headerElement.appendChild(icon);
+    }
+}
+
+
+
+</script>

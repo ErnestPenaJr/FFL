@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="eng">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <meta name="description" content="">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/images/favicon.png">
+    <meta name="author" content="Ernest Pena Jr">
+    <meta name="HandheldFriendly" content="true">
+    <title>Fellowship Financial Ledger</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/fontawesome-pro-5.15.4/css/all.css">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="node_modules/datatables.net-bs5/css/dataTables.bootstrap5.css">
+    <link rel="stylesheet" href="node_modules/datatables.net-buttons-bs5/css/buttons.bootstrap5.css">
+</head>
+<style>
+    .navbar .sidebar{
+        border-bottom: 4px solid red; /* Change '2px' to adjust the thickness of the line */
+    }
+    .navbar{
+        height: 56px;
+    }
+    .sidebar .nav-link:hover {
+        color: #ff9900;
+    }
+    .sidebar .signout:hover {
+        color: #009dff;
+    }
+    .sidebar .notifications:hover {
+        color: #00ff1a;
+    }
+    div.top {
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
+    div.top .dataTables_paginate {
+        display: inline-block;
+    }  
+</style>
+
+<body>
+    <div class="main-conainer d-flex">
+        <div class="sidebar" id="side_nav">
+            <div class="header-box px-1 pt-1 pb-1 d-flex justify-content-between bg-black">
+                <h1 class="fs-6"><span class="px-2"><img src="assets/images/mda-logo.png" height="40"></span> <i id="version" class="fs-5 text-info"></i></h1>
+            </div>
+            <div style="width:100%; background-color: #e32525;height: 4px;"></div>
+
+            <!---(User Login Info Display)--->
+            <div class="ms-2 mt-2 text-warning fst-italic fs-4">Welcome</div>
+            <div class="ms-2 text-info userDisplay "> <span class="userInfo fw-bold fs-4"></span></div>
+            
+            
+            <hr class="h-color mx-2">
+            <ul class="list-unstyled pt-2 px-2">
+                <li id="home" class="nav-item"><a href="#" class="nav-link text-decoration-none px-3 py-2 d-block text-uppercase"><i class="fas fa-home-heart"></i> Home</a></li>
+                <!-- <li class="nav-item dropend">
+                    <a class="nav-link text-decoration-none px-3 py-2 d-block fyd dropdown-toggle text-uppercase" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-calendar-alt"></i>  Select Fiscal Year
+                    </a>
+                    <ul class="fydd dropdown-menu fs-5"></ul>
+                </li> -->
+
+                <li id="loadLedger" class="nav-item"><a href="#" class="nav-link text-decoration-none px-3 py-2 d-block text-uppercase"><i class="fas fa-landmark"></i> Ledger</a></li>
+
+                <li id="iniBalances" class="nav-item dropend px-3 py-2 d-block">
+                    <a class="nav-link dropdown-toggle fs-6 text-uppercase" href="#" role="button" data-bs-toggle="dropdown"  aria-expanded="false">
+                        <i class="fas fa-balance-scale"></i> Initial Balances
+                    </a>
+                    <ul class="dropdown-menu fs-6">
+                        
+                        <li><a class="dropdown-item" id="T32" href="#"><i class="fas fa-money-check-edit-alt"></i> T32 Checkbook</a></li>
+                        <li><a class="dropdown-item" id="PRS_FUND" href="#"><i class="fas fa-sack-dollar"></i> PRS Funds</a></li>
+                        <li><a class="dropdown-item" id="ENDOWMENT" href="#"><i class="fas fa-hand-holding-usd"></i> Endowment</a></li>
+                        <li><a class="dropdown-item" id="GRANTS" href="#"><i class="fas fa-hands-usd"></i> Fellow Grants</a></li>
+                        <li><a class="dropdown-item" id="DEPARTMENT" href="#"><i class="fas fa-building"></i> Department</a></li>
+                    </ul>
+                </li>
+                <!-- <li><a href="#" class="text-decoration-none px-3 py-2 d-block"><i class="fal fa-calendar-alt"></i> Calendar</a></li> -->
+                <li id="reports" class="nav-item dropend px-3 py-2 d-block">
+                    <a class="nav-link dropdown-toggle fs-6 text-uppercase" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="far fa-money-check"></i> Reports
+                    </a>
+                    <ul class="dropdown-menu fs-6">
+                        <li><a class="dropdown-item" id="reconReport" href="#">Reconciliation</a></li>
+                        <li><a class="dropdown-item" id="spendingReport" href="#">Blank Spending</a></li>
+                        <li><a class="dropdown-item" id="totalsReport" href="#">Reconciliation Totals</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link notifications text-decoration-none px-3 py-2 d-block d-flex justify-content-between text-uppercase">
+                        <span><i class="fas fa-envelope-open-dollar"></i> Notifications</span>
+                        <span class="bg-success rounded-pill text-white py-0 px-2">03</span>
+                    </a>
+                </li>
+            <hr class="h-color mx-2">
+                <li class="nav-item dropend px-3 py-2 d-block">
+                    <a class="nav-link dropdown-toggle fs-6 text-uppercase" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="fas fa-cog"></i> Administration
+                    </a>
+                    <ul class="dropdown-menu fs-6">
+                        <li><h4 class="dropdown-header text-uppercase">Manage all Types</h4></li>
+                        <li><a class="dropdown-item" id="ffl_form" href="#"> Manage Ledger</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><h4 class="dropdown-header text-uppercase">Manage User Access</h4></li>
+                        <li><a class="dropdown-item" id="mgtUsers" href="#"><i class="fas fa-users"></i> Users</a></li>
+                        <li><a class="dropdown-item" id="mgtFellows" href="#"><i class="fas fa-user-md"></i> Fellows</a></li>
+                    </ul>
+                </li>
+                <li id="helpRequest" class="nav-item "><a  href="#" class="nav-link text-decoration-none px-3 py-2 d-block"><i class="fas fa-question-circle"></i> HELP</a></li>
+                <li><a href="#" class="text-decoration-none px-3 py-2 d-block signout text-uppercase"><i class="fas fa-sign-in-alt"></i> <span id="signout"> Sign Out</span></a></li>
+
+            </ul>
+
+        </div>
+        <div class="content">
+            <nav class="navbar navbar-expand-md text-light navbar-dark bg-black">
+                <div class="container-fluid">
+                    <div class="d-flex justify-content-between d-md-none d-block">
+                        <button class="btn px-1 py-0 open-btn me-2"><i class="fal fa-stream text-light"></i></button>
+                        <a class="navbar-brand fs-4" href="#"><span id="siteTitle" class="px-0 py-1"></span></a>
+                </div>
+                    <button class="navbar-toggler py-0 border-0" type="button" data-bs-toggle="collapse"  data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fal fa-bars"></i>
+                    </button>
+                    <span class="maintitle fs-3"></span>
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0" style="display:none">
+                        <li class="nav-item fs-4r row">
+                            <span class="nav-link active text-info selectedFY fs-3" href="#"></span>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <div style="width:100%; background-color: #e32525;height: 4px;"></div>
+            <div class="container-fluid">
+                <div id="LoadContent"></div>
+            </div>
+        </div>  
+    </div>
+
+    
+    <div class="modal glass" tabindex="-1" id="secureLogin2">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-body">
+                <div class="card-body">
+                    <h1 class="card-title text-uppercase  text-center">Security Login</h1>
+                    <div class="row" style="margin-top:10px;">
+                        <div class="col-md-12">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1"><i
+                                        class="fas fa-user-astronaut"></i></span>
+                                <input type="text" class="form-control userid" id="Userid" autocomplete="username"
+                                    placeholder="Active Directory Username" autofocus />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"><i class="far fa-key-skeleton"></i></span>
+                                <input type="password" class="form-control userpassword"
+                                    autocomplete="current-password" id="password"
+                                    placeholder="Active Directory Password" />
+                            </div>
+                            <button type="button" class="btn btn-link iForgot float-end"
+                                style="color: darkblue; margin-top:-15px;font-size: 15px;"
+                                link="https://oneaccess.mdanderson.org/">Forgot Password <i
+                                class="fas fa-link"></i></button>
+                        </div>
+                    </div>
+                    <div class="row" id="access" style="display:none">
+                        <div class="col-md-12">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control bg-info" id="requestAccess"
+                                    placeholder="name@example.com">
+                                <label for="requestAccess">Please enter your employee id to request access.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px; margin-bottom: 5px">
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="requestAccessChk">
+                                <label class="form-check-label" for="requestAccessChk">
+                                    Request Access
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <button id="login2App" class="btn  btn-primary login2App float-end">Login
+                                <i class="fas fa-sign-in-alt fa-fw "></i></button>
+                        </div>
+                    </div>
+                    <div class="alert alert-warning" role="alert" style="display: none;">
+                        <i class="fas fa-exclamation-triangle"></i> <span class="errormessage"></span>
+                    </div>
+                    <div class="card-footer"
+                        style="background-color: white; font-size:11px; border-radius: 5px;padding:10px 10px 10px 10px">
+                        <span style="font-weight: bold; color: red">UNAUTHORIZED ACCESS TO THIS NETWORK DEVICE IS
+                            PROHIBITED.</span> <br><span class="text-muted">Use of this application is for
+                            authorized University of Texas M. D. Anderson Cancer Center (UTMDACC) users only. This
+                            computer system is the property of UTMDACC. It may be used only as authorized by
+                            UTMDACC. Individuals accessing or using this computer system have no expectation of
+                            privacy with respect to such access or usage except as may otherwise be provided by
+                            applicable privacy laws. Pursuant to Texas Administrative Code Section 202.7, usage is
+                            subject to security testing and monitoring as appropriate, and misuse is subject to
+                            criminal prosecution. Report any suspected unauthorized activity to the Information
+                            Security Department at 713-745-9000.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="assets/fontawesome-pro-5.15.4/js/fontawesome.js"></script>
+    <script src="node_modules/aos/dist/aos.js"></script>
+    <script src="node_modules/jszip/dist/jszip.js"></script>
+    <script src="node_modules/datatables.net/js/jquery.dataTables.js"></script>
+    <script src="node_modules/datatables.net-bs5/js/dataTables.bootstrap5.js"></script>
+    <script src="node_modules/datatables.net-buttons/js/dataTables.buttons.js"></script>
+    <script src="node_modules/datatables.net-buttons-bs5/js/buttons.bootstrap5.js"></script>
+    <script src="node_modules/pdfmake/build/pdfmake.js"></script>
+    <script src="node_modules/pdfmake/build/vfs_fonts.js"></script>
+    <script src="node_modules/datatables.net-buttons/js/buttons.html5.js"></script>
+    <script src="node_modules/xlsx/dist/xlsx.full.min.js"></script>
+    <script src="node_modules/moment/moment.js"></script>
+    <script src="assets/js/script.js"></script>
+</body>
+
+
+<div class="modal" tabindex="-1" id="sessionTimeoutWarningModal" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Session Timeout Warning</h5>
+            </div>
+            <div class="modal-body">
+                <p>Your session is about to expire in <span id="countdown">60</span> seconds. Do you want to continue?
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="keepSessionAlive">Yes, Keep Session</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, Logout</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>
+
+<script>
+    $('document').ready(function () {
+        getVersion()
+    
+        //$('#sessionTimeoutWarningModal').modal('show').css('z-index', '999');
+        // loadFy()
+        // loadFydd()
+        $('#LoadContent').load('fellows.html');
+
+        initializeSessionTimeout({
+            sessionTimeout: 20 * 60 * 1000,
+            warningTimeout: 19 * 60 * 1000
+        });
+
+        $('.open-btn').click(function () {
+            $('#side_nav').toggleClass('open');
+        });
+
+
+        $('.nav-item').on('click', function () {
+            $('.nav-item').removeClass('active');
+            var id = $(this).attr('id');
+            
+            //console.log(id);
+            $(this).addClass('active');
+            $('.li').addClass('active ');
+            
+            if (id == 'loadLedger') {
+                $(this).addClass('active');
+                $('#LoadContent').load('ledger.html');
+            }
+            if (id == 'home') {
+                $('#LoadContent').load('fellows.html');
+            }
+            if(id == 'helpRequest'){
+                $('#LoadContent').load('Help.html');
+            }
+        });
+        $('.dropdown-item').on('click', function () {
+            $('.dropdown-item').removeClass('active text-white');
+            $(this).addClass('active text-white');
+            var typeValue = $(this).attr('id');
+            
+            var reports = ['cmeReport','reconReport', 'spendingReport', 'totalsReport'];
+            var quotes = [,'T32','PRS_FUND', 'GRANTS', 'ENDOWMENT', 'DEPARTMENT'];
+            var types = ['ffl_form'];
+            var mgt = ['mgtUsers', 'mgtFellows'];
+            
+            if (types.includes(typeValue)){
+                $('#LoadContent').load('forms.html', function() {
+                    $(this).data('type', typeValue);
+                });
+            }else if(reports.includes(typeValue)){
+                $('#LoadContent').load('Reports.html', function() {
+                    $(this).data('type', typeValue); 
+                   
+                });
+            }else if(quotes.includes(typeValue)){
+                $('#LoadContent').load('Quotes.html', function() {
+                    $(this).data('type', typeValue); 
+                    
+                });
+            }else if(mgt.includes(typeValue)){
+                $('#LoadContent').load('MgtUsers.html', function() {
+                    $(this).data('type', typeValue); 
+                });
+            }
+            $('#LoadContent').show(500);
+
+        });
+
+        $('.nav-item').on('blur', function () {
+            $('.nav-item').removeClass('active');
+            $('.li').removeClass('active');
+        });
+        
+        $('#ledger thead tr td').each(function () {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="' + title + '" style="width:50px"/>');
+        });
+        
+        $('.iForgot').on('click', function () {
+            var link = $(this).attr('link');
+            window.open(link, '_blank');
+        });
+        var auth = sessionStorage.getItem('authenticated');
+        
+        if (auth == 'true') {
+            $('#secureLogin2').hide();
+            $('.userInfo').html(sessionStorage.getItem('fullname'));
+            $('#displayUserInfo').slideDown(500).show();
+            $('.container-fluid').show();
+            initializeSessionTimeout({
+                sessionTimeout: 20 * 60 * 1000,
+                warningTimeout: 19 * 60 * 1000
+            });
+        } else {
+            $('#secureLogin2').show();
+        }
+
+        $('.signout').click(function () {
+            sessionStorage.clear();
+            $('#LoadContent').remove();
+            $('.userInfo').html('');
+            $('#secureLogin2').slideDown(500);
+            var auth = '';
+            //reload page
+            location.reload();
+        });
+
+        $('#Userid').keyup(function () {
+            var a = $(this).val();
+            if (a.length >= 4) {
+                $(this).addClass('is-valid');
+            }
+        });
+        $('#password').keyup(function () {
+            var b = $(this).val();
+            if (b.length >= 6) {
+                $(this).addClass('is-valid');
+            }
+        });
+        //when requestAccessChk is checked then show the requestAccess div
+        $('#requestAccessChk').change(function () {
+            if ($(this).is(':checked')) {
+                $('#access').slideDown(500);
+                $('#login2App').html('<i class="fad fa-door-open"></i> Request Access');
+            } else {
+                $('#requestAccess').val('');
+                $('#access').slideUp(500)
+                $('#login2App').html('Login <i class="fas fa-sign-in-alt fa-fw "></i>');
+            }
+        });
+
+        //when login2App button is clicked then verify username and password
+        $('#login2App').click(function () {
+            var u = $('#Userid').val();
+            var p = $('#password').val();
+            //verify username and password is not null
+            if (u == '' || p == '') {
+                if (u.length == 0) {
+                    $('#Userid').addClass('is-invalid').focus();
+                }
+                if (p.length == 0) {
+                    $('#password').addClass('is-invalid').focus();
+                }
+                $('.alert-warning').show().animate({ opacity: 1.0 }, 3000).fadeOut("slow");
+                $('.errormessage').html('Please enter your username and password');
+                return;
+            } else {
+                authentication(u, p);
+            }
+        });
+    })
+
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+    function setUpColumnSearch(table) {
+        // Add input elements to each footer cell
+        $('#ledger thead th').each(function() {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+        });
+
+        // Apply the search on input event
+        table.columns().every(function() {
+            var that = this;
+            $('input', this.header()).on('keyup change clear', function() {
+                if (that.search() !== this.value) {that.search(this.value).draw(); }
+            });
+        });
+    }
+
+    function getVersion() {
+        $.ajax({
+            url: 'assets/json/versions.json',
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                var x = data.versions
+                var version = x[0].shortName + ' ' + 'v' + x[0].version;
+
+                $('#version').html(version);
+                $('.maintitle').html(x[0].longName);
+            },
+            error: function () {
+                console.log('error');
+            }
+        });
+    }
+
+    // function loadFy() {
+    //     $.ajax({
+    //         url: 'assets/json/fy.json',
+    //         type: "GET",
+    //         dataType: "json",
+    //         success: function (data) {
+    //             var x = data.fiscal
+    //             var option = '<option selected>Open this select menu</option>';
+    //             for (var i = 0; i < x.length; i++) {
+    //                 option += '<option value="' + x[i].FY + '">' + x[i].FY + '</option>';
+    //             }
+    //             $('.select').html(option);
+    //         },
+    //         error: function () {
+    //             console.log('error');
+    //         }
+    //     });
+    // }
+    // function loadFydd() {
+    //     $.ajax({
+    //         url: 'assets/json/fy.json',
+    //         type: "GET",
+    //         dataType: "json",
+    //         success: function (data) {
+    //             var x = data.fiscal
+    //             var option = '';
+    //             for (var i = 0; i < x.length; i++) {
+    //                 option += ' <li class="' + x[i].FY + '"><a class="dropdown-item fy-item" href="#FY=' + x[i].FY + '">' + x[i].FY + '</a></li>'
+    //             }
+    //             $('.fydd').html(option);
+
+    //             $('.fy-item').click(function(e) {
+    //                 e.preventDefault();
+    //                 let fy = Number($(this).text());
+
+    //                 $('.selectedFY').html('FY-'+fy);
+    //                 $('.navbar-nav').slideDown(500);
+    //                 //$('.dataTable').slideDown(500);
+    //                 $('.version').slideDown(500)
+    //             });
+    //         },
+    //         error: function () {
+    //             console.log('error');
+    //         }
+    //     });
+    // }
+    function initializeSessionTimeout(options) {
+        // Constants based on options or default values
+        var SESSION_TIMEOUT = options.sessionTimeout || 20 * 60 * 1000;
+        var WARNING_TIMEOUT = options.warningTimeout || 19 * 60 * 1000;
+
+        // Timer variables
+        var sessionTimer, warningTimer, countdownTimer;
+        var countdownValue = 60; // 60 seconds for countdown
+        
+
+        // Function to reset timers
+        function resetTimers() {
+            clearTimeout(sessionTimer);
+            clearTimeout(warningTimer);
+            clearInterval(countdownTimer);
+            countdownValue = 60; // Reset countdown
+            startTimers();
+        }
+
+        // Start session timer and warning timer
+        function startTimers() {
+            warningTimer = setTimeout(function () {
+                // Start the countdown
+                countdownTimer = setInterval(function () {
+                    countdownValue--;
+                    //console.log(countdownValue);
+                    $("#countdown").text(countdownValue);
+                    if (countdownValue <= 0) {
+                        clearInterval(countdownTimer);
+                    }
+                }, 1000);
+                // Show the modal when the warning timer expires
+                $("#sessionTimeoutWarningModal").modal("show");
+            }, WARNING_TIMEOUT);
+
+            sessionTimer = setTimeout(function () {
+                clearInterval(countdownTimer); // Clear countdown timer to stop updating
+                // Redirect to logout or simply reload the page
+                location.reload();
+            }, SESSION_TIMEOUT);
+        }
+
+        // Event to keep the session alive and reset timers
+        $("#keepSessionAlive").click(function () {
+            resetTimers();
+            // Hide the modal when the session is extended
+            $("#sessionTimeoutWarningModal").modal("hide");
+        });
+    }
+
+    //authentication function
+    function authentication(u, p) {
+        $.ajax({
+            url: 'assets/json/employee_lu.json',
+            type: "GET",
+            dataType: "json",
+            data: {
+                USERNAME: u,
+                PASSWORD: p
+            },
+            success: function (data) {
+                var x = data.items
+                //console.log(x)
+                var authenticatedUser = null;
+
+                for (var i = 0; i < x.length; i++) {
+                    if (x[i].USERNAME.toLowerCase() === u.toLowerCase() && x[i].PASSWORD.toLowerCase() === p.toLowerCase()) {
+                        authenticatedUser = x[i];
+                        break;
+                    }
+                }
+                if (authenticatedUser) {
+                    sessionStorage.setItem('emplid', authenticatedUser.EMPLID);
+                    sessionStorage.setItem('fullname', authenticatedUser.FULL_NAME);
+                    sessionStorage.setItem('nickname', authenticatedUser.NICKNAME);
+                    sessionStorage.setItem('name', authenticatedUser.NICKNAME);
+                    sessionStorage.setItem('email', authenticatedUser.EMAIL_ADDRESS);
+                    sessionStorage.setItem('dept', authenticatedUser.DISPLAY_NAME);
+                    sessionStorage.setItem('authenticated', true);
+                    $('.alert-success').html('SUCCESSFULLY LOGGED IN').show().animate({ opacity: 1.0 }, 3000).fadeOut("slow");
+                    $('#LoadContent').load('fellows.html');
+                    $('#displayUserInfo').slideDown(500);
+                    $('#secureLogin2').slideUp(500);
+                    $('.login-container').hide();
+                    $('.container-fluid').show();
+                    $('.userInfo').html(sessionStorage.getItem('fullname'));
+                    
+                    initializeSessionTimeout({
+                        sessionTimeout: 20 * 60 * 1000,
+                        warningTimeout: 19 * 60 * 1000
+                    });
+
+                } else {
+                    sessionStorage.clear();
+                    sessionStorage.setItem('authenticated', false);
+                    // If the user is not authenticated, display an error message
+                    $('.alert-warning').show().animate({ opacity: 1.0 }, 3000).fadeOut("slow");
+                    $('.errormessage').html('Invalid username or password');
+                    //$('#Userid').addClass('is-invalid').focus();
+                    $('#password').addClass('is-invalid').focus();
+                }
+            },
+            error: function () {
+                console.log('error');
+            }
+        });
+    }
+</script>

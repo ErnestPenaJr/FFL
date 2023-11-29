@@ -1,0 +1,15 @@
+{
+    "versions": [
+        {
+            "longName": "Fellowship Financial Ledger",
+            "shortName": "FFL",
+            "version": "0.1.5",
+            "description": "Fellowship Leger App",
+            "status": "active",
+            "startDate": "2023-10-6",
+            "releaseDate": "2023-10-6",
+            "releaseNotes": "Initial release of the APP",
+            "developer": "Ernest Pena Jr"
+        }
+    ]
+}

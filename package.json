@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "@curiosityx/bootstrap-session-timeout": "^1.0.0",
+    "aos": "^2.3.4",
+    "bootstrap": "^5.3.2",
+    "bootstrap-icons": "^1.11.1",
+    "datatables.net": "^1.13.6",
+    "datatables.net-bs5": "^1.13.6",
+    "datatables.net-buttons-bs5": "^2.4.2",
+    "dropzone": "^6.0.0-beta.2",
+    "jquery": "^3.7.1",
+    "jszip": "^3.10.1",
+    "moment": "^2.29.4",
+    "pdfmake": "^0.2.7",
+    "xlsx": "^0.18.5"
+  }
+}

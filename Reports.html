@@ -1,0 +1,565 @@
+<div class="row col-md-12"style="margin: 8px 0px 0px 0px;">
+    <div class="card">
+        <div class="card-body">
+            <h1 class="card-title">
+                <span class="typeName text-uppercase"></span>
+            </h1>
+            
+        </div>
+    </div>
+</div>
+
+<div class="row glassTable" style="margin: 8px 0px 0px 0px;">
+    <div class="col-md-12">
+        <table id="tbl" class=" fs-6 display table table-striped table-hover table-sm table-light rounded" style="margin: 0px 0px 0px 0px;">
+            <thead id="headerNames"></thead>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Record Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="card">
+                <div class="card-body" style="position: relative; z-index: 1;">
+                    <div class="row">
+                        <div class="col-3">
+                            <span id="modal-type">
+                                <label for="type" class="form-label fw-bold text-uppercase">Transaction Type</label>
+                                <select name="type" id="type" class="form-control">
+                                    <option selected>Select Transaction Type</option>
+                                    <option value="Travel">Travel</option>
+                                    <option value="M&O">M & O</option>
+                                    <option value="Child Care">Child Care</option>
+                                </select>
+                            </span>
+                        </div>
+                        <div class="col">
+                            <h2 class="text-center text-uppercase text-black d-block align-content-center">transactions<br><small class="title text-muted fst-italic fs-4 mt-0"></small></h2>
+                        </div>
+                        <div class="col">
+                            <span id="modal-credit">
+                                <label for="credit" class="form-label fw-bold text-uppercase">Credit</label>
+                                <input name="credit" id="credit" type="text" class="form-control" disabled>
+                            </span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row mb-2">
+                        <div class="col">
+                            <span id="modal-cfs">
+                                <label for="cfs" class="form-label fw-bold text-uppercase">Chart Field String</label>
+                                <input name="cfs" id="cfs" type="text" class="form-control" disabled>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <span id="modal-emplid">
+                                <div id="addCalUsers"  style="width:100%">
+                                    <label for="emplid" class="form-label fw-bold text-uppercase">EMPL<span id="searching">O</span>YEE SEARCH</span></label>
+                                    <input name="emplid" id="emplid" type="text" class="form-control" placeholder="Employee ID" disabled>
+                                </div>
+                                <div id="results" style="color:#000;margin-top:5px;max-height: 350px; z-index: 10; position: relative;"></div>
+                            </span>
+                        </div>
+                        <div class="col">  
+                            <span id="modal-vendorID">
+                                <label for="vendorID" class="form-label fw-bold text-uppercase">Vendor ID</label>
+                                <input name="vendorID" id="vendorID" type="text" class="form-control" placeholder="Vendor ID" disabled>
+                            </span>
+                        </div>
+                        <div class="col">
+                            <span id="modal-vendorname">
+                                <label for="vendorname" class="form-label fw-bold text-uppercase">Vendor Name</label>
+                                <input name="vendorname" id="vendorname" type="text" class="form-control" placeholder="Vendor name" disabled>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col">
+                            <span id="modal-expensed_date">
+                                <label for="expense_date" class="form-label fw-bold text-uppercase">Expense Date</label>
+                                <input name="expense_date" id="expense_date" type="date" class="form-control" disabled/>
+                            </span>
+                        </div>
+                        <div class="col">
+                            <span id="modal-requisition_date">
+                                <label for="requisition_date" class="reqDate form-label fw-bold text-uppercase">Requisition Date</label>
+                                <input name="requisition_date" id="requisition_date" type="date" class="form-control" disabled/>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col">
+                            <span id="modal-notes">
+                                <label for="notes" class="form-label fw-bold text-uppercase">Description</label>
+                                <textarea name="notes" id="notes" type="text" class="form-control" placeholder="Description" disabled></textarea>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col">
+                            <span id="modal-debit">
+                                <label for="expense_date" class="form-label fw-bold text-uppercase">Debit / Cost</label>
+                                <input name="debit" id="debit" type="text" class="form-control" disabled />
+                            </span>
+                        </div>
+                        <div class="col"> </div>
+                    </div> 
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+$(document).ready(function() {
+    var type = $("#LoadContent").data("type");
+    console.log(type);
+    
+    if(type=='T32'){
+        $(".typeName").text(type+'-Checkbook');
+        loadT32(type)
+    }else if(type=='PRS_FUND'){
+        $(".typeName").text(type.split("_")[0] +' '+ type.split("_")[1]);
+        loadPRS(type)
+    }else{
+        loadData(type)
+    }
+});
+
+function loadT32(type){
+    $.ajax({
+        url: 'assets/CFCs/functions.cfc',
+        type: 'GET',
+        dataType: 'json',
+        data: { method: "get" + type },
+        success: function(data) {
+            console.log(data.items);
+            var x = data.items;
+            var tbl ='';
+                tbl += '<tr>';
+                tbl += '<th>ID</th>';
+                tbl += '<th>CFS</th>';
+                tbl += '<th>Vendor Name</th>';
+                tbl += '<th>Vendor ID</th>';
+                tbl += '<th>Employee ID</th>';
+                tbl += '<th>Expensed Date</th>';
+                tbl += '<th>Requisition Date</th>';
+                tbl += '<th>Transaction Description</th>';
+                tbl += '<th>Transaction Type</th>';
+                tbl += '<th>Debit</th>';
+                tbl += '<th>Credit</th>';
+                tbl += '</tr>';
+            $('#headerNames').append(tbl);
+            var table = $('#tbl').DataTable({
+                data: x,
+                dom: "Bfrtip",
+                    buttons: [
+                        { text: 'Add New',
+                            action: function ( e, dt, node, config ) {
+                                // Logic for adding a new record
+
+
+                                // This can involve opening a form/modal where the user can input the new record's details
+                                // After successful addition, you can add the new record to the DataTable
+                                // clear contents of modal
+                                $('#modal-id').text('');
+                                $('#modal-cfs').text('');
+                                $('#modal-vendorname').text('');
+                                $('#modal-vendorid').text('');
+                                $('#modal-emplid').text('');
+                                $('#modal-expensed_date').text('');
+                                $('#modal-requisition_date').text('');
+                                $('#modal-notes').text('');
+                                $('#modal-debit').text('');
+                                $('#modal-credit').text('');
+                                
+                                // open a modal
+                                $('#myModal').modal('show');
+                                // reload data
+                                table.ajax.reload();
+
+                            },
+                            className: 'btn btn-primary'
+                        },
+                        { text: 'Edit',
+                            action: function ( e, dt, node, config ) {
+                                // Logic for editing an existing record
+                                // This can involve opening a form/modal where the user can edit the record's details
+                            },
+                            className: 'btn btn-primary'
+                        },
+                        { text: 'Delete',
+                            action: function ( e, dt, node, config ) {
+                                // Logic for deleting an existing record
+                                // This can involve opening a form/modal where the user can confirm the deletion
+
+                                // After successful deletion, you can remove the row from the DataTable
+                                // table.row($(this).parents('tr')).remove().draw();
+
+
+                            },
+                            className: 'btn btn-primary'
+                        },
+                        { text: 'Update Credit Line',
+                            action: function ( e, dt, node, config ) {
+                                // Logic for editing an existing record
+                                // This can involve opening a form/modal where the user can edit the record's details
+                            },
+                            className: 'btn btn-primary'
+                        },
+                        { text: 'Export',
+                            action: function ( e, dt, node, config ) {
+                                var data = table.rows().data();
+                                var csv = '';
+                                for (var i = 0; i < data.length; i++) {
+                                    csv += data[i].id + ',' + data[i].name + ',' + data[i].email + '\n';
+                                }
+                                var hiddenElement = document.createElement('a');
+                                hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+                                hiddenElement.target = '_blank';
+                                hiddenElement.download = 'users.csv';
+                                hiddenElement.click();
+                            },
+                            className: 'btn btn-primary'
+                        },
+                        { text: 'Print',
+                            action: function ( e, dt, node, config ) {
+                                // Logic for printing the DataTable
+                                // This can involve opening a new window with the data in a printable format
+                            },
+                            className: 'btn btn-primary'
+                        }
+                    ],
+                columns: [
+                        { data: 'ID' },
+                        { data: 'CFS'},
+                        { data: 'VENDORNAME' },
+                        { data: 'VENDORID' },
+                        { data: 'EMPLID' },
+                        { data: 'EXPENSED_DATE' },
+                        { data: 'REQUISITION_DATE' },
+                        { data: 'NOTES' },
+                        { data: 'TYPE' },
+                        { data: 'DEBIT' },
+                        { data: 'CREDIT' }
+                    ],
+                    "order": [[0, "asc"]],
+                    "paging": true,
+                    "ordering": true,
+                    "info": true,
+                    "searching": true,
+                    "scrollY": "600px",
+                    "scrollCollapse": true,
+                    "paging": true,
+                    "fixedColumns": {
+                        "leftColumns": 2,
+                        "rightColumns": 1
+                    }
+            });
+
+            
+
+            var searchableColumns = ["ID","CFS","Vendor Name", "Vendor ID", "Employee ID","Expensed Date","Requisition Date","Transaction Description","Transaction Type","Debit","Credit"];
+            $('#tbl thead th').each(function () {
+                var title = $(this).text();
+                if (searchableColumns.includes(title)) {
+                    $(this).html('<input type="text" class="form-control"  />');
+                }
+            });
+            
+            table.columns().every(function () {
+                var that = this;
+                $('input', this.footer()).on('keyup change clear', function () {
+                    if (that.search() !== this.value) { 
+                        that.search(this.value).draw();
+                    }
+                });
+            });
+            $('#tbl tbody').on('click', 'tr', function() {
+                var data = table.row(this).data();
+                console.log(data);
+                $('#modal-id').text(data.ID);
+                $('#modal-cfs').text(data.CFS);
+                $('#modal-vendorname').text(data.VENDORNAME);
+                $('#modal-vendorid').text(data.VENDORID);
+                $('#modal-emplid').text(data.EMPLID);
+                $('#modal-expensed_date').text(data.EXPENSED_DATE);
+                $('#modal-requisition_date').text(data.REQUISITION_DATE);
+                $('#modal-notes').text(data.NOTES);
+                $('#modal-debit').text(data.DEBIT);
+                $('#modal-credit').text(data.CREDIT);
+
+                // Open the modal
+                $('#myModal').modal('show');
+            });
+
+            $('#tbl tbody').on('click', 'tr', function() {
+                var data = table.row(this).data();
+                
+                // Populate the modal with the data
+                $('#modal-id').text(data.id);
+                $('#modal-vendorname').text(data.VENDORNAME);
+                // ... populate other fields as needed
+
+                // Open the modal
+                $('#myModal').modal('show');
+            });
+
+            $('#tbl tbody').on('click', '.btn-edit', function() {
+            var data = table.row($(this).parents('tr')).data();
+                // Here you can open a form to edit the data
+                // Populate the form with the 'data' object
+                // ...
+            });
+
+            $('#tbl tbody').on('click', '.btn-delete', function() {
+                var data = table.row($(this).parents('tr')).data();
+                // Confirm if the user really wants to delete
+                var confirmDelete = confirm("Do you really want to delete record with ID: " + data.id + "?");
+                if (confirmDelete) {
+                    // Execute deletion logic
+                    // This can involve sending a DELETE request to your backend, for example
+                    // After successful deletion, you can remove the row from the DataTable
+                    table.row($(this).parents('tr')).remove().draw();
+                }
+            });
+
+        }  
+    });
+}
+
+function loadPRS(type){
+    $.ajax({
+        url: 'assets/CFCs/functions.cfc',
+        type: 'GET',
+        dataType: 'json',
+        data: { method: "get" + type },
+        success: function(data) {
+            console.log(data.items);
+            var x = data.items;
+            var tbl ='';
+                tbl += '<tr>';
+                tbl += '<th>ID</th>';
+                tbl += '<th>Employee ID</th>';
+                tbl += '<th>Fellow</th>';
+                tbl += '<th>Description</th>';
+                tbl += '<th>Department ID</th>';
+                tbl += '<th>Fund Group</th>';
+                tbl += '<th>Fund Type</th>';
+                tbl += '<th>Start Date</th>';
+                tbl += '<th>End Date</th>';
+                tbl += '<th>Submitted</th>';
+                tbl += '</tr>';
+            $('#headerNames').append(tbl);
+            var table = $('#tbl').DataTable({
+                data: x,
+                dom: "Bfrtip",
+                    buttons: [
+                        { text: 'Add New',
+                            action: function ( e, dt, node, config ) {
+                                // Logic for adding a new record
+
+
+                                // This can involve opening a form/modal where the user can input the new record's details
+                                // After successful addition, you can add the new record to the DataTable
+                                // clear contents of modal
+                                $('#modal-id').text('');
+                                $('#modal-cfs').text('');
+                                $('#modal-vendorname').text('');
+                                $('#modal-vendorid').text('');
+                                $('#modal-emplid').text('');
+                                $('#modal-expensed_date').text('');
+                                $('#modal-requisition_date').text('');
+                                $('#modal-notes').text('');
+                                $('#modal-debit').text('');
+                                $('#modal-credit').text('');
+                                
+                                // open a modal
+                                $('#myModal').modal('show');
+                                // reload data
+                                table.ajax.reload();
+
+                            },
+                            className: 'btn btn-primary'
+                        },
+                        { text: 'Edit',
+                            action: function ( e, dt, node, config ) {
+                                // Logic for editing an existing record
+                                // This can involve opening a form/modal where the user can edit the record's details
+                            },
+                            className: 'btn btn-primary'
+                        },
+                        { text: 'Delete',
+                            action: function ( e, dt, node, config ) {
+                                // Logic for deleting an existing record
+                                // This can involve opening a form/modal where the user can confirm the deletion
+
+                                // After successful deletion, you can remove the row from the DataTable
+                                // table.row($(this).parents('tr')).remove().draw();
+
+
+                            },
+                            className: 'btn btn-primary'
+                        },
+                        { text: 'Update Credit Line',
+                            action: function ( e, dt, node, config ) {
+                                // Logic for editing an existing record
+                                // This can involve opening a form/modal where the user can edit the record's details
+                            },
+                            className: 'btn btn-primary'
+                        },
+                        { text: 'Export',
+                            action: function ( e, dt, node, config ) {
+                                var data = table.rows().data();
+                                var csv = '';
+                                for (var i = 0; i < data.length; i++) {
+                                    csv += data[i].id + ',' + data[i].name + ',' + data[i].email + '\n';
+                                }
+                                var hiddenElement = document.createElement('a');
+                                hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+                                hiddenElement.target = '_blank';
+                                hiddenElement.download = 'users.csv';
+                                hiddenElement.click();
+                            },
+                            className: 'btn btn-primary'
+                        },
+                        { text: 'Print',
+                            action: function ( e, dt, node, config ) {
+                                // Logic for printing the DataTable
+                                // This can involve opening a new window with the data in a printable format
+                            },
+                            className: 'btn btn-primary'
+                        }
+                    ],
+                columns: [
+                        { data: 'ID' },
+                        { data: 'EMPLID'},
+                        { data: 'FELLOW' },
+                        { data: 'DESCRIPTION' },
+                        { data: 'DEPTID' },
+                        { data: 'FUND_GROUP' },
+                        { data: 'FUND_TYPE' },
+                        { data: 'START_DATE' },
+                        { data: 'END_DATE' },
+                        { data: 'SUBMISSION_STATUS' },
+                        { data: 'CREDIT' }
+                    ],
+                    "order": [[0, "asc"]],
+                    "paging": true,
+                    "ordering": true,
+                    "info": true,
+                    "searching": false,
+                    "scrollY": "600px",
+                    "scrollCollapse": true,
+                    "paging": true,
+                    "fixedColumns": {
+                        "leftColumns": 2,
+                        "rightColumns": 1
+                    }
+            });
+
+            
+
+            var searchableColumns = ["Employee ID","Fellow", "", "Start Date"];
+            $('#tbl thead th').each(function () {
+                var title = $(this).text();
+                if (searchableColumns.includes(title)) {
+                    $(this).html('<input type="text" class="form-control"  />');
+                }
+            });
+            
+            table.columns().every(function () {
+                var that = this;
+                $('input', this.footer()).on('keyup change clear', function () {
+                    if (that.search() !== this.value) { 
+                        that.search(this.value).draw();
+                    }
+                });
+            });
+            $('#tbl tbody').on('click', 'tr', function() {
+                var data = table.row(this).data();
+                console.log(data);
+                $('#modal-id').text(data.ID);
+                $('#modal-cfs').text(data.CFS);
+                $('#modal-vendorname').text(data.VENDORNAME);
+                $('#modal-vendorid').text(data.VENDORID);
+                $('#modal-emplid').text(data.EMPLID);
+                $('#modal-expensed_date').text(data.EXPENSED_DATE);
+                $('#modal-requisition_date').text(data.REQUISITION_DATE);
+                $('#modal-notes').text(data.NOTES);
+                $('#modal-debit').text(data.DEBIT);
+                $('#modal-credit').text(data.CREDIT);
+
+                // Open the modal
+                $('#myModal').modal('show');
+            });
+
+            $('#tbl tbody').on('click', 'tr', function() {
+                var data = table.row(this).data();
+                
+                // Populate the modal with the data
+                $('#modal-id').text(data.id);
+                $('#modal-vendorname').text(data.VENDORNAME);
+                // ... populate other fields as needed
+
+                // Open the modal
+                $('#myModal').modal('show');
+            });
+
+            $('#tbl tbody').on('click', '.btn-edit', function() {
+            var data = table.row($(this).parents('tr')).data();
+                // Here you can open a form to edit the data
+                // Populate the form with the 'data' object
+                // ...
+            });
+
+            $('#tbl tbody').on('click', '.btn-delete', function() {
+                var data = table.row($(this).parents('tr')).data();
+                // Confirm if the user really wants to delete
+                var confirmDelete = confirm("Do you really want to delete record with ID: " + data.id + "?");
+                if (confirmDelete) {
+                    // Execute deletion logic
+                    // This can involve sending a DELETE request to your backend, for example
+                    // After successful deletion, you can remove the row from the DataTable
+                    table.row($(this).parents('tr')).remove().draw();
+                }
+            });
+
+        }
+    });      
+}
+
+
+function loadData(type) {
+    $.ajax({
+      url: "assets/CFCs/functions.cfc",
+      type: "GET",
+      dataType: "json",
+      data: { method: "get" + type },
+      success: function (data) {
+        console.log(data);
+        var items = data.items;
+        var form_names = "<tr>";
+        for (var i = 0; i < items.length; i++) {
+            //get column names
+            form_names += '<th scope="col" class="text-uppercase">'+Object.keys(items[i])+'</th>';
+        }
+        form_names += "</tr>";
+        $('#headerNames').html(form_names);
+      },
+    });
+  }
+
+</script>
