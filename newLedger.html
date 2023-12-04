@@ -1,64 +1,549 @@
-<link rel="stylesheet" href="assets/css/style.css">
-<link rel="stylesheet" href="assets/fontawesome-pro-5.15.4/css/all.css">
-<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
-<link rel="stylesheet" href="node_modules/dropzone/dist/dropzone.css">
-
-<div class="my-auto mx-auto">
-    <table id="ledger" class="table table-striped table-hover table-bordered table-sm">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>JOURNAL</th>
-                <th>TRANSACTION DATE</th>
-                <th>TRANSACTION TYPE</th>
-                <th>VENDOR ID</th>
-                <th>VENDOR NAME</th>
-                <th>EMPLID</th>
-                <th>PURCHASE AMOUNT</th>
-                <th>DEPTID</th>
-                <th>FUND GROUP</th>
-                <th>FUND TYPE</th>
-                <th>FUND</th>
-                <th>PROJECT</th>
-                <th>ACCOUNT</th>
-                <th>PAYMENT TYPE</th>
-                <th>REQUISITION NUM</th>
-                <th>PO</th>
-                <th>DESCRIPTION</th>
-                <th>FILES</th>
-                <th>RECONCILED</th>
-                <th>STATUS</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-
-    </table>
-
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-10">
+                <h1>Ledger</h1>
+                
+            </div>
+            <div class="col-md-2">
+                <div class="form-floating mb-2">
+                    <select id="fiscalYearDropdown" class="form-select"aria-label="Fiscal Year"></select>
+                    <label for="fiscalYearDropdown">Select Fiscal Year</label>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div id="ledgerDiv"></div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<script src="node_modules/jquery/dist/jquery.js"></script>
-<script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
-<script src="assets/fontawesome-pro-5.15.4/js/fontawesome.js"></script>
-<script src="node_modules/aos/dist/aos.js"></script>
-<script src="node_modules/jszip/dist/jszip.js"></script>
-<script src="node_modules/datatables.net/js/jquery.dataTables.js"></script>
-<script src="node_modules/datatables.net-bs5/js/dataTables.bootstrap5.js"></script>
-<script src="node_modules/datatables.net-buttons/js/dataTables.buttons.js"></script>
-<script src="node_modules/datatables.net-buttons-bs5/js/buttons.bootstrap5.js"></script>
-<script src="node_modules/pdfmake/build/pdfmake.js"></script>
-<script src="node_modules/pdfmake/build/vfs_fonts.js"></script>
-<script src="node_modules/datatables.net-buttons/js/buttons.html5.js"></script>
-<script src="node_modules/xlsx/dist/xlsx.full.min.js"></script>
-<script src="node_modules/moment/moment.js"></script>
-<script src="node_modules/dropzone/dist/dropzone.js"></script>
-<script src="assets/js/script.js"></script>
+<div class="modal" id="addNewLedger" tabindex="-1" aria-labelledby="addNewLedger" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" style="width:935px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fal fa-plus"></i> Add new record</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+
+              <div class="modal-body">
+                <div class="card my-auto mx-auto" style="width: 900px">
+                    <div class="card-body"> 
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <label for="TRANSACTION_DATE" class="form-label fw-bold text-uppercase">Transaction Date</label>
+                                <input type="date" class="form-control" id="TRANSACTION_DATE" aria-describedby="TRANSACTION_DATEHelp" required>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="TRANSACTION_TYPE" class="form-label fw-bold text-uppercase">Transaction Type</label>
+                                <select id="TRANSACTION_TYPE" class="form-select" aria-label="Transaction Type" required>
+                                    <option selected>Open this select menu</option>
+                                    <option value="1">Childcare</option>
+                                    <option value="2">Facilities - Maint., Utilities and Rent</option>
+                                    <option value="3">Fringe Benefits</option>
+                                    <option value="4">Minor Equipment Services, and Renovations</option>
+                                    <option value="5">Other Supplies</option>
+                                    <option value="6">Personnel/Salary</option>
+                                    <option value="7">Purchased Services</option>
+                                    <option value="8">Miscellaneous</option>
+                                    <option value="9">Travel Expenses </option>
+                                </select>
+                            </div>
+                            <div id="travelDates" class="row col-sm-6" style="display: none;">
+                                    <div class="col-sm-6 ">
+                                        <label class="form-check-label fw-bold text-uppercase mb-2" for="START_DATE">Travel Start Date</label>
+                                        <input type="datetime-local" class="form-control" id="START_DATE" placeholder="Start_Date" aria-label="Start Date">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="form-check-label fw-bold text-uppercase mb-2" for="END_DATE">Travel End Date</label>
+                                        <input type="datetime-local" class="form-control" id="END_DATE" placeholder="End_Date" aria-label="End Date">
+                                    </div>
+                            </div>
+                        </div>
+                        
+                        <hr class="border border-secondary-subtle border-2 opacity-75 rounded">
+                        <div class="row mb-3 ">
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label for="VENDOR_ID" class="form-label fw-bold text-uppercase">Vendor ID</label>
+                                        <input type="text" class="form-control" id="VENDOR_ID" aria-describedby="vendorID">
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <label for="VENDOR_NAME" class="form-label fw-bold text-uppercase">Vendor Name</label>
+                                        <input type="text" class="form-control" id="VENDOR_NAME" aria-describedby="vendorName">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 searchBox">
+                                <label for="EMPLID" class="form-label fw-bold text-uppercase">EMPL<span id="searching">O</span>YEE <i class="fas fa-search"></i></span></label>
+                                <input name="EMPLID" id="EMPLID" type="text" class="form-control" placeholder="Employee ID" required/>
+                                <div id="results" class="searchResults" style="color:#000;margin-top:5px;display: none;"></div>
+                            </div>
+                        </div>
+                        <hr class="border border-secondary-subtle border-2 opacity-75 rounded">
+                                <div class="row ">
+                                    <div class="col-sm-2">
+                                        <label for="DEPTID" class="form-label fw-bold text-uppercase">Department</label>
+                                        <select id="DEPTID" class="form-select" aria-label="Department" required>
+                                            <option selected>Open this select menu</option>
+                                            <option value="600641 ">600641 - Cancer Med Fellowship Prog </option>
+                                            <option value="710174 ">710174 - Cancer Med Fellowship Prog - Rch </option>
+                                            <option value="700006 ">700006 - Institutional PRS</option>
+                                            <option value="700009 ">710009 Cancer Med Administration</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <label for="FUND_GROUP" class="form-label fw-bold text-uppercase">Fund Gp</label>
+                                        <select id="FUND_GROUP" class="form-select" aria-label="Fund Group" required>
+                                            <option selected>Open this select menu</option>
+                                            <option value="10">10 Education and General Funds</option>
+                                            <option value="20">20 Plant Funds</option>
+                                            <option value="26">26 Loan Fund</option>
+                                            <option value="28">28 Agency Funds</option>
+                                            <option value="30">30 Designated Funds</option>
+                                            <option value="40">40 Physicians Referral Service</option>
+                                            <option value="70">70 Auxiliary Funds</option>
+                                            <option value="80">80 Philanthropy Funds</option>
+                                            <option value="90">90 Restricted Grants and Contracts</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <label for="FUND" class="form-label fw-bold text-uppercase">Fund</label>
+                                        <select id="FUND" class="form-select" aria-label="Fund" required>
+                                            <option selected>Open this select menu</option>
+                                            <option value="100101">100101 - Patient Care </option>
+                                            <option value="100103">100103 - Instruction </option>
+                                            <option value="100151">100151 - Divisional Chair Patient Care  </option>
+                                            <option value="100300">100300 - Research Grant </option>
+                                            <option value="105333">105333 - Barbara Rattay Adv Scholar Prg </option>
+                                            <option value="105335">105335 - Fellowship Training Program </option>
+                                            <option value="105336">105336 - RGK Advanced Scholar Program </option>
+                                            <option value="105337">105337 - VD Committee Med Onc Fellow </option>
+                                            <option value="105884">105884 - Arnold Advanced Scholar Prog</option> 
+                                            <option value="107364">107364 - Jeannine Rainbolt Adv Scholar </option>
+                                            <option value="108610">108610 - Edu Grant Genentech Fellow Prg </option>
+                                            <option value="109569">109569 - PRS Funds for Fellows </option>
+                                            <option value="111086">111086 - C.G.Johnson Fdn Adv Schol Prgm </option>
+                                            <option value="111271">111271 - Medical Oncology International </option>
+                                            <option value="112550">112550 - VD Festschrift Symposium </option>
+                                            <option value="115776">115776 - EFM Hematology Onc Fellowship </option>
+                                            <option value="116261">116261 - Advanced Scholar Program </option>
+                                            <option value="120020">120020 - Mark Cox Advanced Scholar Fund </option>
+                                            <option value="124419">124419 - Cancer Med Fellowship </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-2 searchAccountBox">
+                                        <label for="ACCOUNT" class="form-label fw-bold text-uppercase">Account <i id="AccSearch" class="fas fa-search"></i></label>
+                                        <input type="text" class="form-control" id="ACCOUNT" aria-describedby="account" required>
+                                        <div id="accountResults" class="searchAccountResults" style="color:#000;margin-top:5px;max-height: 350px; display:none"></div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <label for="FUND_TYPE" class="form-label fw-bold text-uppercase">Fund Type</label>
+                                        <select id="FUND_TYPE" class="form-select" aria-label="Fund Type" required>
+                                            <option selected>Open this select menu</option>
+                                            <option value="11">11 Internal Support</option>
+                                            <option value="13">13 Incentive For Salary Award</option>
+                                            <option value="15">15 Start Up and Retention</option>
+                                            <option value="19">19 Philanthropy Funds</option>
+                                            <option value="21">21 Allocated Philanthropy Funds</option>
+                                            <option value="23">23 Private Industry Residual Funds</option>
+                                            <option value="26">26 Discretionary Budget Funds</option>
+                                            <option value="28">28 Indirect Cost Recovery Program</option>
+                                            <option value="31">31 Administrative Chair Funds</option>
+                                            <option value="33">33 Department Chair Funds</option>
+                                            <option value="34">34 Faculty Development Allotments</option>
+                                            <option value="36">36 Tobacco Funds</option>
+                                            <option value="38">38 Preceptorship Funds</option>
+                                            <option value="40">40 Recharge or Service Center</option>
+                                            <option value="41">41 Revolving Funds</option>
+                                            <option value="42">42 Childrens Art Project Funds</option>
+                                            <option value="44">44 Other Designated Funds</option>
+                                            <option value="46">46 Patent Grant Funds</option>
+                                            <option value="48">48 Foundation Grants Funds</option>
+                                            <option value="50">50 Endowment Income Funds</option>
+                                            <option value="52">52 Federal Funds</option>
+                                            <option value="54">54 Foundation Funds</option>
+                                            <option value="85">85 Division of Medical Staff</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <label for="PROJECT" class="form-label fw-bold text-uppercase">Project</label>
+                                        <select id="PROJECT" class="form-select" required>
+                                            <option selected>Open this select menu</option>
+                                            <option value="00013945">00013945 - Childcare (T32) </option>
+                                            <option value="00011356">00011356 - Restricted G&C (T32) </option>
+                                            <option value="00011355">00011355 - Research Training in Academic (T32) </option>
+                                            <option value="00015932">00015932 - Restricted G&C (Urrutia-YIA) </option>
+                                            <option value="00015676">00015676 - Restricted G&C (Bhamidipati-YIA) </option>
+                                            <option value="00015294">00015294 - Restricted G&C (Atluri-YIA) </option>
+                                            <option value="00015292">00015292 - Restricted G&C (Tang-YIA) </option>
+                                            <option value="00015445">00015445 - Restricted G&C (Bermack-YIA)</option>  
+                                            <option value="00015283">00015283 - Restricted G&C (Pellatt-YIA)</option> 
+                                            <option value="00015263">00015263 - Restricted G&C (Concannon-YIA) </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            <hr class="border border-secondary-subtle border-2 opacity-75 rounded">
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <label for="PAYMENT_TYPE" class="form-label fw-bold text-uppercase">Payment Type</label>
+                                <select id="PAYMENT_TYPE" class="form-select" required>
+                                    <option selected>Open this select menu</option>
+                                    <option value="Concur">Concur</option>
+                                    <option value="Miscellaneous">Misc. Payment </option>
+                                    <option value="ePAF">ePAF</option>
+                                    <option value="ProCard ">ProCard </option>
+                                    <option value="PO">Purchase Order </option>
+                                </select>
+                            </div>
+                            <div id="po_fields" class="col-sm-6" style="display: none;">
+                                <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="REQUISITION_NUM" class="form-label fw-bold text-uppercase">Req. Number</label>
+                                    <input type="text" class="form-control" id="REQUISITION_NUM" aria-describedby="requisition_num">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="PO" class="form-label fw-bold text-uppercase">Purchase Order</label>
+                                    <input type="text" class="form-control" id="PO" aria-describedby="PO">
+                                </div>
+                            </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="purchase_amount" class="form-label fw-bold text-uppercase">Purchase Amount</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input id="purchase_amount" type="text" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="border border-secondary-subtle border-2 opacity-75 rounded">
+                        <div class="row mb-3">
+                            <div class="col-sm-2">
+                                <div class="form-check d-flex justify-content-center align-content-center">
+                                    <input class="form-check-input" type="radio" name="ENTRY_TYPE" id="CME" value="CME">
+                                    <label class="form-check-label fw-bold text-uppercase" for="CME"style="margin-left:5px">CME</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-check d-flex justify-content-center align-content-center">
+                                    <input class="form-check-input" type="radio" name="ENTRY_TYPE" id="travel" value="deptTravel">
+                                    <label class="form-check-label fw-bold text-uppercase" for="travel"style="margin-left:5px">Dept Travel</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-check d-flex justify-content-center align-content-center">
+                                    <input class="form-check-input" type="radio" name="ENTRY_TYPE" id="PRS" value="PRS">
+                                    <label class="form-check-label fw-bold text-uppercase" for="PRS" style="margin-left:5px">PRS</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-check d-flex justify-content-center align-content-center">
+                                    <input class="form-check-input T32" type="radio" name="ENTRY_TYPE" id="T32" value="T32">
+                                    <label class="form-check-label fw-bold text-uppercase" for="T32" style="margin-left:5px">T32</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-check d-flex justify-content-center align-content-center">
+                                    <input class="form-check-input" type="radio" name="ENTRY_TYPE" id="YIA" value="YIA">
+                                    <label class="form-check-label fw-bold text-uppercase" for="YIA" style="margin-left:5px">YIA</label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="border border-secondary-subtle border-2 opacity-75 rounded">
+                        <div class="row mb-3">
+                            <div class="col-sm-12">
+                                <label for="RECEIPTS" class="form-label fw-bold text-uppercase">Drop Receipts HERE (PDF Files only)</label>
+                                <div id="RECEIPTS" class="dropzone"></div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="DESCRIPTION" class="form-label fw-bold text-uppercase">Description</label>
+                            <textarea type="text" class="form-control" id="DESCRIPTION" aria-describedby="description" rows="2"></textarea>
+                        </div>
+                        <hr class="border border-secondary-subtle border-2 opacity-75 rounded">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="JOURNALNUMBER" placeholder="Add Journal Number">
+                                    <label for="JOURNALNUMBER">Add Journal Number</label>
+                                  </div>
+                            </div>
+                            <div class="col-sm-9 text-end">
+                                <button id="reset" type="button" class="btn btn-outline-danger" style="margin-right: 5px;"><i class="fas fa-recycle"></i> Reset</button>
+                                <button id="save" type="button" class="btn btn-outline-primary" style="display:none"><i class="fas fa-save"></i> Save New Record</button>
+                                <button id="update" type="button" class="btn btn-outline-success" style="display:none"><i class="fad fa-sync-alt"></i> Update</button>
+                                <button id="soft_delete" type="button" class="btn btn-outline-warning" style="display:none"><i class="fas fa-trash"></i> Delete</button>
+                                <input type="hidden" id="ID" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>
 
 <script>
     $(document).ready(function() {
-        loadLedger()
-    });
-    function loadLedger(){
+        
+        loadLedgerTable();
+        createFiscalYearDropdown('#fiscalYearDropdown');
 
+        // reset form
+        $('#reset').click(function() {
+            $('input[type="text"], input[type="number"], textarea').val('');
+            $('select').prop('selectedIndex', 0);
+        });
+        
+        $('#RECEIPTS').on('change', function(){
+            var file = this.files[0];
+            var fileType = file.type;
+            var match = ['application/pdf'];
+            if(!((fileType == match[0]))){
+                alert('Sorry, only PDF files are allowed to upload.');
+                $('#RECEIPTS').val('');
+                return false;
+            }
+        });
+        
+        //if trnsaction type is childcare, check raido button T32
+        $('#TRANSACTION_TYPE').on('change', function() {
+           
+            var selectedType = $(this).val();
+
+            if (selectedType === '9') {
+                $('#travelDates').slideDown(200);
+            } else {
+                $('#travelDates').slideUp(200);
+                $('#START_DATE').val('');
+                $('#END_DATE').val('');
+            }
+            if (selectedType === '1') {
+                $('.T32').prop('checked', true);
+            } else {
+                $('.T32').prop('checked', false);
+            }
+        });
+
+        //add date time to todays date
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes();
+        var dateTime = date+'T'+time;
+        // format with moment.js 
+        var dateTime = moment().format('YYYY-MM-DDTHH:mm');
+
+        $('#todaysDate').val(dateTime);
+
+        $('#save').on('click', function(e){
+            e.preventDefault();
+            saveLedgerData();
+        });
+
+        $('#PAYMENT_TYPE').on('change', function() {
+            if (this.value == 'PO') {
+                $('#po_fields').slideDown(200);
+            } else {
+                $('#po_fields').slideUp(200);
+                //clear fields requisition_num and PO
+                $('#REQUISITION_NUM').val('');
+                $('#PO').val('');
+            }
+        });
+
+        //Employee search function
+        $('#EMPLID').on('keyup', function() {
+            $('.returnMessage').removeClass('alert alert-danger').empty() 
+            var x = $(this).val();
+            if (x != '') {
+                employeeSearch(x)
+            } else {
+                $(this).attr('EMPLID','');
+                $('#results').hide();
+                $('#addUser').removeClass('btn-warning').addClass('btn-secondary');
+                $('#searching').html('O');
+            }
+        });
+
+        $('#TRANSACTION_TYPE').change(function() {
+            var selectedType = $(this).val();
+            var additionalFields = $('#additionalFields');
+            additionalFields.empty(); // Clear previous additional fields
+            if (selectedType === 'childcare') {
+                // Add specific fields for childcare
+                additionalFields.append('<div class="mb-3"><label class="form-label">Childcare Account</label><input type="text" class="form-control" name="childcareAccount"></div>');
+            } else if (selectedType === 'travelExpenses') {
+                // Add fields for travel expenses
+                additionalFields.append('<div class="mb-3"><label class="form-label">Travel Start Date</label><input type="date" class="form-control" name="travelStartDate"></div>');
+                additionalFields.append('<div class="mb-3"><label class="form-label">Travel End Date</label><input type="date" class="form-control" name="travelEndDate"></div>');
+            }
+            // Add other conditions and fields as necessary
+        });
+        
+        $('#DEPTID').on('keyup', function() {
+            $('.returnMessage').removeClass('alert alert-danger').empty() 
+            var x = $(this).val();
+            if (x != '') {
+                departmentSearch(x)
+            } else {
+                $(this).attr('DEPTID','');
+                $('#deptResults').hide();
+            }
+        });
+        $('#ACCOUNT').on('keyup', function() {
+            $('.returnMessage').removeClass('alert alert-danger').empty() 
+            var x = $(this).val();
+            if (x != '') {
+                accountSearch(x)
+            } else {
+                $(this).attr('ACCOUNT','');
+                $('#accountResults').hide();
+            }
+        });
+
+        $('#myForm').on('submit', function(e) {
+            // Check if all required fields are filled out
+            var isValid = true;
+            $('#myForm [required]').each(function() {
+                if ($(this).val() === '') {
+                    isValid = false;
+                    $(this).addClass('is-invalid'); // Bootstrap 5 class for invalid input
+                } else {
+                    $(this).removeClass('is-invalid');
+                }
+            });
+            if (!isValid) {
+            e.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+
+    });
+
+
+    //save new record
+    function saveLedgerData(){
+        var JOURNALNUMBER = $('#JOURNALNUMBER').val();
+        var TRANSACTION_DATE = $('#TRANSACTION_DATE').val();
+        var TRANSACTION_TYPE = $('#TRANSACTION_TYPE').val();
+        var VENDOR_ID = $('#VENDOR_ID').val();
+        var VENDOR_NAME = $('#VENDOR_NAME').val();
+        var EMPLID = $('#EMPLID').val();
+        var PURCHASE_AMOUNT = $('#PURCHASE_AMOUNT').val();
+        var DEPTID = $('#DEPTID').val();
+        var FUND_GROUP = $('#FUND_GROUP').val();
+        var FUND_TYPE = $('#FUND_TYPE').val();
+        var FUND = $('#FUND').val();
+        var PROJECT = $('#PROJECT').val();
+        var ACCOUNT = $('#ACCOUNT').val();
+        var PAYMENT_TYPE = $('#PAYMENT_TYPE').val();
+        var REQUISITION_NUM = $('#REQUISITION_NUM').val();
+        var PO = $('#PO').val();
+        var DESCRIPTION = $('#DESCRIPTION').val();
+        var RECEIPTS = $('#RECEIPTS').val();
+        var START_NAME = $('#START_DATE').val();
+        var END_DATE = $('#END_DATE').val();
+        var ENTRY_TYPE = $('input[name="ENTRY_TYPE"]:checked').val();
+        var MGT_TYPE = 'add'
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: "assets/CFCs/functions.cfc",
+            data: {
+                method: "MGTFFL",
+                JOURNALNUMBER: JOURNALNUMBER,
+                TRANSACTION_DATE: TRANSACTION_DATE,
+                TRANSACTION_TYPE: TRANSACTION_TYPE,
+                VENDOR_ID: VENDOR_ID,
+                VENDOR_NAME: VENDOR_NAME,
+                EMPLID: EMPLID,
+                PURCHASE_AMOUNT: PURCHASE_AMOUNT,
+                DEPTID: DEPTID,
+                FUND_GROUP: FUND_GROUP,
+                FUND_TYPE: FUND_TYPE,
+                FUND: FUND,
+                PROJECT: PROJECT,
+                ACCOUNT: ACCOUNT,
+                PAYMENT_TYPE: PAYMENT_TYPE,
+                REQUISITION_NUM: REQUISITION_NUM,
+                PO: PO,
+                DESCRIPTION: DESCRIPTION,
+                RECEIPTS: RECEIPTS,
+                START_NAME: START_NAME,
+                END_DATE: END_DATE,
+                ENTRY_TYPE: ENTRY_TYPE,
+                MGT_TYPE: MGT_TYPE
+            },
+            beforeSend: function() {
+                $('#save').html('<span style="color: rgb(59, 91, 152)"><i class="fas fa-spinner fa-spin"></i></span>');
+            },
+            success: function(response) {
+                if (response == 'success') {
+                    $('#save').html('<i class="fas fa-save"></i> Save New Record');
+                    $('#myForm')[0].reset();
+                    $('#cfsModal').modal('hide');
+                    $('#cfsTable').DataTable().ajax.reload();
+                    $('.returnMessage').addClass('alert alert-success').html('Record Saved Successfully').fadeIn('slow').delay(2000).fadeOut('slow');
+                } else {
+                    $('#save').html('<i class="fas fa-save"></i> Save New Record');
+                    $('.returnMessage').addClass('alert alert-danger').html(response).fadeIn('slow').delay(2000).fadeOut('slow');
+                }
+            },
+            error: function() {
+                $('#save').html('<i class="fas fa-save"></i> Save New Record');
+                $('.returnMessage').addClass('alert alert-danger').html('There was an error while trying to save this record').fadeIn('slow').delay(2000).fadeOut('slow');
+            }
+        });
+   }
+
+
+    function loadLedgerTable(){
+        var tbl = '';
+        tbl += '<table id="ledger" class="table table-striped table-hover table-bordered table-sm table-responsive" style="font-size:9px">';
+        tbl += '<thead>';
+        tbl += '<tr>';
+        tbl += '<th>ID</th>';
+        tbl += '<th>JOURNAL</th>';
+        tbl += '<th>TRANSACTION DATE</th>';
+        tbl += '<th>TRANSACTION TYPE</th>';
+        tbl += '<th>TRAVEL START DATE</th>';
+        tbl += '<th>TRAVEL END DATE</th>';
+        tbl += '<th>VENDOR ID</th>';
+        tbl += '<th>VENDOR NAME</th>';
+        tbl += '<th>EMPLID</th>';
+        tbl += '<th>PURCHASE AMOUNT</th>';
+        tbl += '<th>DEPTID</th>';
+        tbl += '<th>FUND GROUP</th>';
+        tbl += '<th>FUND TYPE</th>';
+        tbl += '<th>FUND</th>';
+        tbl += '<th>PROJECT</th>';
+        tbl += '<th>ACCOUNT</th>';
+        tbl += '<th>PAYMENT TYPE</th>';
+        tbl += '<th>ENT. TYPE</th>';
+        tbl += '<th>REQUISITION NUM</th>';
+        tbl += '<th>PO</th>';
+        tbl += '<th>DESCRIPTION</th>';
+        tbl += '<th>RECONCILED</th>';
+        tbl += '<th>RECEIPTS</th>';
+        tbl += '</tr>';
+        tbl += '</thead>';  
+        tbl += '</table>';
+        $('#ledgerDiv').html(tbl);
+
+        $('#ledger thead th').each( function () {
+            var title = $(this).text();
+            $(this).html( title+'<input type="text" class="form-control form-control-sm mt-1" />' );
+            $(this).addClass('bg-secondary text-white text-center ');
+            $(this).addClass('text-nowrap');
+        });
+        //initialize DataTable code
+        loadLedger()
+    }
+    function loadLedger(){
         var ledger = $("#ledger").DataTable({
             "ajax": "assets/CFCs/functions.cfc?method=getFFL",
             "columns": [
@@ -66,6 +551,8 @@
                 {"data": "JOURNALNUMBER"},
                 {"data": "TRANSACTION_DATE"},
                 {"data": "TRANSACTION_TYPE"},
+                {"data": "START_DATE"},
+                {"data": "END_DATE"},
                 {"data": "VENDOR_ID"},
                 {"data": "VENDOR_NAME"},
                 {"data": "EMPLID"},
@@ -77,24 +564,28 @@
                 {"data": "PROJECT"},
                 {"data": "ACCOUNT"},
                 {"data": "PAYMENT_TYPE"},
+                {"data": "ENTERY_TYPE"},
                 {"data": "REQUISITION_NUM"},
+                
                 {"data": "PO"},
                 {"data": "DESCRIPTION"},
-                {"data": "RECEIPTS"},
                 {"data": "RECONCILED"},
-                {"data": "STATUS"}
+                {"data": "RECEIPTS"}
             ],
             "order": [[0, "asc"]],
             "paging": true,
             "ordering": true,
             "info": true,
-            "searching": true,
-            //"scrollY": "550px",
+            "searching": false,
+            "scrollY": "550px",
             "scrollCollapse": true,
             "paging": true,
         pageLength: 10,
         lengthMenu: [10, 25, 50, 75, 100],
-        dom: 'Bfrtip',
+        dom: "<'row' <'col-sm-6'l><'col-md-6 text-end align-content-bottom'B> >"
+            +"<'row'<'col-sm-12'tr> >"
+            +"<'row'<'col-sm-6'i> <'col-sm-6 text-end'p> >",
+        select: true,
         buttons: [
         { 
             className: 'mb-2',
@@ -108,10 +599,10 @@
                         $('#START_DATE').val('');
                         $('#END_DATE').val('');
                         $('#SUBMISSION_STATUS').val();
-                        $("input").attr("disabled",true);
-                        $("textarea").attr("disabled",true);
+                        // $("input").attr("disabled",true);
+                        // $("textarea").attr("disabled",true);
                     }
-                    $('#loadModal').modal('show');
+                    $('#addNewLedger').show()
                     $('#save').show();
                     $('#update').hide();
                     $('#soft_delete').hide();
@@ -131,26 +622,78 @@
                         });
                         return newObj;
                     });
-                    var headers = ['ID', 'CFS_ID', 'FELLOW', 'DESCRIPTION', 'START_DATE', 'END_DATE', 'SUBMISSION_STATUS'];
+                    var headers = ['FFL_ID', 'JOURNALNUMBER', 'TRANSACTION_DATE', 'TRANSACTION_TYPE', 'VENDOR_ID', 'VENDOR_NAME', 'EMPLID', 'PURCHASE_AMOUNT', 'DEPTID', 'FUND_GROUP', 'FUND_TYPE', 'FUND', 'PROJECT', 'ACCOUNT', 'PAYMENT_TYPE', 'REQUISITION_NUM', 'PO', 'DESCRIPTION', 'RECEIPTS', 'RECONCILED', 'STATUS'];
                     var wb = XLSX.utils.book_new();
                     var ws = XLSX.utils.json_to_sheet(data, { header: headers });
                     XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-                    XLSX.writeFile(wb, 'PRS-Funds.xlsx');
+                    XLSX.writeFile(wb, 'Ledger.xlsx');
                 }
             },{
                     extend: 'pdfHtml5',
                     text: 'Save PDF',
                     className: 'mb-2',
                     orientation: 'landscape', // Optional: landscape or portrait
-                    pageSize: 'A4', // Optional: 'A3', 'A5', 'A4', 'LEGAL', 'LETTER' etc.
-                    title: 'PRS Funds', // Optional: Title for the PDF
+                    pageSize: 'LEGAL', // Optional: 'A3', 'A5', 'A4', 'LEGAL', 'LETTER' etc.
+                    title: 'Ledger', // Optional: Title for the PDF
+                    filename: 'Ledger', // Default: ''DateCSVSales'' - String or function() { } to declare the file name
+                    customize: function(doc) {
+                        doc.styles.tableHeader.fontSize = 8;
+                        doc.defaultStyle.fontSize = 6;
+                        doc.defaultStyle.alignment = 'center';
+                        doc.styles.tableHeader.alignment = 'center';
+                        doc.cont
+                    },
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6], // Specify the columns you want to export
+                        columns: [1, 2, 3, 4, 5, 6,7,8,9,10,11,12,13,14,15,16,17,18,19,20], // Specify the columns you want to export
                     }
                 }
-        ],
-        dom: "Blrtip",
-        select: true
+        ]
+        });
+        //click on record to edit record
+        $('#ledger tbody').on('click', 'tr', function () {
+            var data = ledger.row( this ).data();
+            $('#FFL_ID').val(data.FFL_ID);
+            $('#JOURNALNUMBER').val(data.JOURNALNUMBER);
+            $('#TRANSACTION_DATE').val(moment(data.TRANSACTION_DATE).format('YYYY-MM-DD'));
+            $('#TRANSACTION_TYPE').val(data.TRANSACTION_TYPE);
+            $('#START_DATE').val(moment(data.START_DATE).format('YYYY-MM-DD'));
+            $('#END_DATE').val(moment(data.END_DATE).format('YYYY-MM-DD'));
+            $('#VENDOR_ID').val(data.VENDOR_ID);
+            $('#VENDOR_NAME').val(data.VENDOR_NAME);
+            $('#EMPLID').val(data.EMPLID);
+            $('#PURCHASE_AMOUNT').val(data.PURCHASE_AMOUNT);
+            $('#DEPTID').val(data.DEPTID);
+            $('#FUND_GROUP').val(data.FUND_GROUP);
+            $('#FUND_TYPE').val(data.FUND_TYPE);
+            $('#FUND').val(data.FUND);
+            $('#PROJECT').val(data.PROJECT);
+            $('#ACCOUNT').val(data.ACCOUNT);
+            $('#PAYMENT_TYPE').val(data.PAYMENT_TYPE);
+            $('#REQUISITION_NUM').val(data.REQUISITION_NUM);
+            $('#PO').val(data.PO);
+            $('#DESCRIPTION').val(data.DESCRIPTION);
+            $('#RECEIPTS').val(data.RECEIPTS);
+            $('#RECONCILED').val(data.RECONCILED);
+            $('#ENTRY_TYPE').val(data.ENTRY_TYPE);
+            console.log(data.ENTERY_TYPE);
+            var selectedType = data.ENTERY_TYPE;
+            if (selectedType === 'T32') {
+                $('#T32').prop('checked', true);
+            }else if(selectedType === 'YIA'){
+                $('#YIA').prop('checked', true);
+            }else if(selectedType === 'PRS'){
+                $('#PRS').prop('checked', true);
+            }else if(selectedType === 'CME'){
+                $('#CME').prop('checked', true);
+            }else if(selectedType === 'DEPT TRAVEL'){
+                $('#travel').prop('checked', true);
+            }
+
+            $('#MGT_TYPE').val('edit');
+            $('#addNewLedger').show()
+            $('#save').hide();
+            $('#update').show();
+            $('#soft_delete').show();
         });
     }
 </script>

@@ -19,62 +19,50 @@
     <link rel="stylesheet" href="node_modules/datatables.net-buttons-bs5/css/buttons.bootstrap5.css">
 </head>
 <style>
-    .navbar .sidebar{
-        border-bottom: 4px solid red; /* Change '2px' to adjust the thickness of the line */
-    }
+
     .navbar{
-        height: 56px;
+        height: 75px;
     }
-    .sidebar .nav-link:hover {
-        color: #ff9900;
+    .navbar .nav-link {
+        color: #ffffff;
     }
-    .sidebar .signout:hover {
+    .navbar .nav-link:hover {
+        color: #00f2ff;
+    }
+    .navbar .signout:hover {
         color: #009dff;
     }
-    .sidebar .notifications:hover {
+    .navbar .notifications:hover {
         color: #00ff1a;
     }
     div.top {
         text-align: center;
         margin-bottom: 1rem;
     }
-
     div.top .dataTables_paginate {
         display: inline-block;
-    }  
+    }
+
 </style>
 
 <body>
-    <div class="main-conainer d-flex">
-        <div class="sidebar" id="side_nav">
-            <div class="header-box px-1 pt-1 pb-1 d-flex justify-content-between bg-black">
-                <h1 class="fs-6"><span class="px-2"><img src="assets/images/mda-logo.png" height="40"></span> <i id="version" class="fs-5 text-info"></i></h1>
-            </div>
-            <div style="width:100%; background-color: #e32525;height: 4px;"></div>
-
-            <!---(User Login Info Display)--->
-            <div class="ms-2 mt-2 text-warning fst-italic fs-4">Welcome</div>
-            <div class="ms-2 text-info userDisplay "> <span class="userInfo fw-bold fs-4"></span></div>
-            
-            
-            <hr class="h-color mx-2">
-            <ul class="list-unstyled pt-2 px-2">
+    <nav class="navbar navbar-expand-lg bd-navbar sticky-top bg-dark bg-gradient border-4 border-bottom border-danger shadow-md">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <h1 class="fs-6 mt-2"><span class="px-2 "><img src="assets/images/mda-logo.png" height="40"></span> <span id="version" class="fs-5 text-info"></span></h1>
+            </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
                 <li id="home" class="nav-item"><a href="#" class="nav-link text-decoration-none px-3 py-2 d-block text-uppercase"><i class="fas fa-home-heart"></i> Home</a></li>
-                <!-- <li class="nav-item dropend">
-                    <a class="nav-link text-decoration-none px-3 py-2 d-block fyd dropdown-toggle text-uppercase" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-calendar-alt"></i>  Select Fiscal Year
-                    </a>
-                    <ul class="fydd dropdown-menu fs-5"></ul>
-                </li> -->
-
                 <li id="loadLedger" class="nav-item"><a href="#" class="nav-link text-decoration-none px-3 py-2 d-block text-uppercase"><i class="fas fa-landmark"></i> Ledger</a></li>
-
-                <li id="iniBalances" class="nav-item dropend px-3 py-2 d-block">
+                <li id="iniBalances" class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle fs-6 text-uppercase" href="#" role="button" data-bs-toggle="dropdown"  aria-expanded="false">
                         <i class="fas fa-balance-scale"></i> Initial Balances
                     </a>
                     <ul class="dropdown-menu fs-6">
-                        
                         <li><a class="dropdown-item" id="T32" href="#"><i class="fas fa-money-check-edit-alt"></i> T32 Checkbook</a></li>
                         <li><a class="dropdown-item" id="PRS_FUND" href="#"><i class="fas fa-sack-dollar"></i> PRS Funds</a></li>
                         <li><a class="dropdown-item" id="ENDOWMENT" href="#"><i class="fas fa-hand-holding-usd"></i> Endowment</a></li>
@@ -82,8 +70,7 @@
                         <li><a class="dropdown-item" id="DEPARTMENT" href="#"><i class="fas fa-building"></i> Department</a></li>
                     </ul>
                 </li>
-                <!-- <li><a href="#" class="text-decoration-none px-3 py-2 d-block"><i class="fal fa-calendar-alt"></i> Calendar</a></li> -->
-                <li id="reports" class="nav-item dropend px-3 py-2 d-block">
+                <li id="reports" class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle fs-6 text-uppercase" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="far fa-money-check"></i> Reports
                     </a>
@@ -99,10 +86,8 @@
                         <span class="bg-success rounded-pill text-white py-0 px-2">03</span>
                     </a>
                 </li>
-            <hr class="h-color mx-2">
-                <li class="nav-item dropend px-3 py-2 d-block">
-                    <a class="nav-link dropdown-toggle fs-6 text-uppercase" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
+                <li class="nav-item dropdown administration">
+                    <a class="nav-link dropdown-toggle fs-6 text-uppercase" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fas fa-cog"></i> Administration
                     </a>
                     <ul class="dropdown-menu fs-6">
@@ -115,37 +100,37 @@
                     </ul>
                 </li>
                 <li id="helpRequest" class="nav-item "><a  href="#" class="nav-link text-decoration-none px-3 py-2 d-block"><i class="fas fa-question-circle"></i> HELP</a></li>
-                <li><a href="#" class="text-decoration-none px-3 py-2 d-block signout text-uppercase"><i class="fas fa-sign-in-alt"></i> <span id="signout"> Sign Out</span></a></li>
 
+                <li class="nav-item"><a href="#" class="nav-link text-decoration-none px-3 py-2 d-inline-block signout text-uppercase"><i class="fas fa-sign-in-alt"></i> <span id="signout"> Sign Out</span></a></li>
             </ul>
-
+          </div>
+            <span class="navbar-text" >
+                <div> 
+                    <div class="row">
+                        <div class="col-sm-2 text-info p-1"><i class="fas fa-id-badge fa-3x"></i> </div>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <span  class=" text-warning fst-italic"> Welcome</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <span class="userInfo text-white"></span>
+                                </div>
+                            </div>  
+                        </div>
+                    </div>
+                </div>
+            </span>
         </div>
-        <div class="content">
-            <nav class="navbar navbar-expand-md text-light navbar-dark bg-black">
-                <div class="container-fluid">
-                    <div class="d-flex justify-content-between d-md-none d-block">
-                        <button class="btn px-1 py-0 open-btn me-2"><i class="fal fa-stream text-light"></i></button>
-                        <a class="navbar-brand fs-4" href="#"><span id="siteTitle" class="px-0 py-1"></span></a>
-                </div>
-                    <button class="navbar-toggler py-0 border-0" type="button" data-bs-toggle="collapse"  data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fal fa-bars"></i>
-                    </button>
-                    <span class="maintitle fs-3"></span>
-                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0" style="display:none">
-                        <li class="nav-item fs-4r row">
-                            <span class="nav-link active text-info selectedFY fs-3" href="#"></span>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-            <div style="width:100%; background-color: #e32525;height: 4px;"></div>
-            <div class="container-fluid">
-                <div id="LoadContent"></div>
-            </div>
-        </div>  
+
+        
+    </nav>
+    <div class="container-fluid">
+        <div id="LoadContent"></div>
     </div>
 
-    
     <div class="modal glass" tabindex="-1" id="secureLogin2">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -288,7 +273,7 @@
             
             if (id == 'loadLedger') {
                 $(this).addClass('active');
-                $('#LoadContent').load('ledger.html');
+                $('#LoadContent').load('newLedger.html');
             }
             if (id == 'home') {
                 $('#LoadContent').load('fellows.html');
